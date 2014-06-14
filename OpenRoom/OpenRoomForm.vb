@@ -110,7 +110,9 @@ Public Class OpenRoomForm
         For Each room As Room In RoomList
             If (room.Button.Name = btn.Name) Then
                 roomClicked = room.OutlookName
-                OR_Engine.BookConferenceRoom(roomClicked, meetingDateAndTime, meetingLength)
+                If (OR_Engine.BookConferenceRoom(roomClicked, meetingDateAndTime, meetingLength)) Then
+                    System.Windows.Forms.MessageBox.Show("You successfully booked " & roomClicked)
+                End If
             End If
         Next room
 
