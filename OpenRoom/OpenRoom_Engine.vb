@@ -5,7 +5,7 @@
     Dim myRecipient As Outlook.Recipient
 
     Public Sub New()
-        Windows.Forms.MessageBox.Show("You've loaded the OpenRoom Engine")
+        'Windows.Forms.MessageBox.Show("You've loaded the OpenRoom Engine")
     End Sub
 
     'Fucntion determines if a given room is free or busy at a specific date and for a specific length

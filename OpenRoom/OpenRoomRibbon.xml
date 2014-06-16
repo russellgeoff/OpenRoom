@@ -5,7 +5,25 @@
       <tab idMso="TabMail">
         <group id="OpenRoomMailGroup"
                label="OpenRoom">
-          <button id="btnRunOpenRoom" label="Run OpenRoom"
+          <button id="btnRunOpenRoomMail" label="Run OpenRoom"
+             screentip="Runs OpenRoom" onAction="OnActionCallback"
+             supertip="Runs OpenRoom to find an open conference room at a specific time."
+             size="large" image="OpenRoomIcon.png"/>
+        </group>
+      </tab>
+      <tab idMso="TabCalendar">
+        <group id="OpenRoomCalGroup"
+               label="OpenRoom">
+          <button id="btnRunOpenRoomCal" label="Run OpenRoom"
+             screentip="Runs OpenRoom" onAction="OnActionCallback"
+             supertip="Runs OpenRoom to find an open conference room at a specific time."
+             size="large" image="OpenRoomIcon.png"/>
+        </group>
+      </tab>
+      <tab idMso="TabAppointment">
+        <group id="OpenRoomAppGroup"
+               label="OpenRoom">
+          <button id="btnRunOpenRoomApp" label="Run OpenRoom"
              screentip="Runs OpenRoom" onAction="OnActionCallback"
              supertip="Runs OpenRoom to find an open conference room at a specific time."
              size="large" image="OpenRoomIcon.png"/>

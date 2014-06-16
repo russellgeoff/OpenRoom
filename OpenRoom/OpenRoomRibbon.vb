@@ -38,9 +38,9 @@ Public Class OpenRoomRibbon
     End Sub
 
     Public Sub OnActionCallback(ByVal control As Office.IRibbonControl)
-        Select Case control.Id
+        Select Case control.Id.Substring(0, 14)
             Case Is = "btnRunOpenRoom"
-                Windows.Forms.MessageBox.Show("You clicked " + control.Id + ". I am going to run OpenRoom.")
+                'Windows.Forms.MessageBox.Show("You clicked " + control.Id + ". I am going to run OpenRoom.")
 
                 'Creates new OpenRoom Form
                 Dim oForm As OpenRoomForm
