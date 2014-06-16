@@ -28,24 +28,31 @@ Public Class OpenRoomForm
         StartTimePicker.Value = Date.Now()
 
         ' Adds all the rooms to the Rooms List
-        AddNewRoom("Carmel", "CR-Carmel", CarmelCommandButton)
-        AddNewRoom("Mendocino", "CR-Mendocino", MendocinoCommandButton)
-        AddNewRoom("Napa", "CR-Napa", NapaCommandButton)
-        AddNewRoom("Pinnacles", "CR-Pinnacles", PinnaclesCommandButton)
-        AddNewRoom("Tahoe", "CR-Tahoe", TahoeCommandButton)
-        AddNewRoom("Design Review Room", "CR-Design Review Room", DRRoomCommandButton)
-        AddNewRoom("Big Sur", "CR-Big Sur", BigSurCommandButton)
-        AddNewRoom("Santa Cruz", "CR-Santa Cruz", SantaCruzCommandButton)
-        AddNewRoom("Shasta", "CR-Shasta", ShastaCommandButton)
-        AddNewRoom("Squaw Valley", "CR-Squaw Valley", SquawValleyCommandButton)
-        AddNewRoom("Joshua Tree", "CR-Joshua Tree", JoshuaTreeCommandButton)
-        AddNewRoom("Monterey", "CR-Monterey", MontereyCommandButton)
-        AddNewRoom("Pismo Beach", "CR-Pismo Beach", PismoBeachCommandButton)
+        AddNewRoom("Carmel", "CR-Carmel", CarmelCommandButton, "R&D", True)
+        AddNewRoom("Mendocino", "CR-Mendocino", MendocinoCommandButton, "R&D", True)
+        AddNewRoom("Napa", "CR-Napa", NapaCommandButton, "R&D", True)
+        AddNewRoom("Pinnacles", "CR-Pinnacles", PinnaclesCommandButton, "R&D", True)
+        AddNewRoom("Tahoe", "CR-Tahoe", TahoeCommandButton, "R&D", True)
+        AddNewRoom("Design Review Room", "CR-Design Review Room", DRRoomCommandButton, "R&D", True)
+        AddNewRoom("Big Sur", "CR-Big Sur", BigSurCommandButton, "Ops", True)
+        AddNewRoom("Santa Cruz", "CR-Santa Cruz", SantaCruzCommandButton, "Ops", True)
+        AddNewRoom("Shasta", "CR-Shasta", ShastaCommandButton, "Floor2", True)
+        AddNewRoom("Squaw Valley", "CR-Squaw Valley", SquawValleyCommandButton, "Floor2", True)
+        AddNewRoom("Joshua Tree", "CR-Joshua Tree", JoshuaTreeCommandButton, "Floor2", True)
+        AddNewRoom("Monterey", "CR-Monterey", MontereyCommandButton, "Floor2", True)
+        AddNewRoom("Pismo Beach", "CR-Pismo Beach", PismoBeachCommandButton, "Floor2", True)
+
+        ResetRoomButtons()
     End Sub
 
     Private Sub FindRoomBtn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles FindRoomBtn.Click
 
         ResetRoomButtons()
+
+        'Sends usage email
+        If UsageInfo.Checked Then 'Only sends usage info if user opts in
+            OR_Engine.SendUsageEmail(0) 'Sends search usage info
+        End If
 
         'Get user input from form
 
@@ -68,18 +75,17 @@ Public Class OpenRoomForm
         ' First it will grab the conference room name from the list, then after getting a status back
         ' it will update the color of the button so that it reflects the room's schedule
         For Each room As Room In RoomList
-
-            If (OR_Engine.isRoomBusy(room.OutlookName, meetingDateAndTime, meetingLength, 30) = False) Then
-                room.Button.BackColor = Drawing.Color.Green
-                room.Button.Enabled = True
-            Else
-                room.Button.BackColor = Drawing.Color.Red
-                room.Button.Enabled = False
+            If room.Enabled = True Then
+                If (OR_Engine.isRoomBusy(room.OutlookName, meetingDateAndTime, meetingLength, 30) = False) Then
+                    room.Button.BackColor = Drawing.Color.Green
+                    room.Button.Enabled = True
+                Else
+                    room.Button.BackColor = Drawing.Color.Red
+                    room.Button.Enabled = False
+                End If
+                Windows.Forms.Application.DoEvents() 'Eventually want to replace this with BackgroundWorker class and do multithreading
             End If
-            Windows.Forms.Application.DoEvents() 'Eventually want to replace this with BackgroundWorker class and do multithreading
         Next room
-
-
     End Sub
 
 
@@ -112,17 +118,26 @@ Public Class OpenRoomForm
                 roomClicked = room.OutlookName
                 If (OR_Engine.BookConferenceRoom(roomClicked, meetingDateAndTime, meetingLength)) Then
                     System.Windows.Forms.MessageBox.Show("You successfully booked " & roomClicked)
+                    If UsageInfo.Checked Then 'Only sends usage info if user opts in
+                        OR_Engine.SendUsageEmail(1)
+                    End If
                 End If
             End If
         Next room
 
     End Sub
 
-    Private Sub AddNewRoom(ByVal FormatedName As String, ByVal OutlookName As String, ByVal Button As Windows.Forms.Button)
+    Private Sub AddNewRoom(ByVal FormatedName As String,
+                           ByVal OutlookName As String,
+                           ByVal Button As Windows.Forms.Button,
+                           ByVal Location As String,
+                           ByVal Enabled As Boolean)
         Dim room As New Room
         room.FormatedName = FormatedName
         room.OutlookName = OutlookName
         room.Button = Button
+        room.Location = Location
+        room.Enabled = Enabled
         RoomList.Add(room)
     End Sub
 
@@ -136,4 +151,20 @@ Public Class OpenRoomForm
         Refresh()
     End Sub
 
+    Private Sub LocationCheckedChanged(sender As Object, e As EventArgs) Handles _
+        RDCheckBox.CheckedChanged, _
+        OpsCheckBox.CheckedChanged, _
+        Floor2CheckBox.CheckedChanged
+
+        For Each room As Room In RoomList
+            Select Case room.Location
+                Case "R&D"
+                    room.Enabled = RDCheckBox.Checked
+                Case "Ops"
+                    room.Enabled = OpsCheckBox.Checked
+                Case "Floor2"
+                    room.Enabled = Floor2CheckBox.Checked
+            End Select
+        Next (room)
+    End Sub
 End Class

@@ -60,6 +60,7 @@ Partial Class OpenRoomForm
         Me.PismoBeachTxtBox = New System.Windows.Forms.Label()
         Me.DRRoomCommandButton = New System.Windows.Forms.Button()
         Me.DRRoomTxtBox = New System.Windows.Forms.Label()
+        Me.UsageInfo = New System.Windows.Forms.CheckBox()
         Me.MeetingInformationGrpBox.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -399,11 +400,24 @@ Partial Class OpenRoomForm
         Me.DRRoomTxtBox.TabIndex = 5
         Me.DRRoomTxtBox.Text = "Design Review Room"
         '
+        'UsageInfo
+        '
+        Me.UsageInfo.AutoSize = True
+        Me.UsageInfo.Checked = True
+        Me.UsageInfo.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.UsageInfo.Location = New System.Drawing.Point(354, 334)
+        Me.UsageInfo.Name = "UsageInfo"
+        Me.UsageInfo.Size = New System.Drawing.Size(140, 17)
+        Me.UsageInfo.TabIndex = 6
+        Me.UsageInfo.Text = "Send Basic Usage Data"
+        Me.UsageInfo.UseVisualStyleBackColor = True
+        '
         'OpenRoomForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(506, 363)
+        Me.Controls.Add(Me.UsageInfo)
         Me.Controls.Add(Me.PismoBeachTxtBox)
         Me.Controls.Add(Me.MontereyTxtBox)
         Me.Controls.Add(Me.JoshuaTreeTxtBox)
@@ -483,4 +497,5 @@ Partial Class OpenRoomForm
     Friend WithEvents DRRoomCommandButton As System.Windows.Forms.Button
     Friend WithEvents DRRoomTxtBox As System.Windows.Forms.Label
     Friend WithEvents MeetingLengthComboBox As System.Windows.Forms.ComboBox
+    Friend WithEvents UsageInfo As System.Windows.Forms.CheckBox
 End Class
