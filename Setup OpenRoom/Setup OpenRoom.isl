@@ -2611,8 +2611,8 @@
 		<col def="I2">Order</col>
 		<col def="I2">ISSetupLocation</col>
 		<col def="S255">ISReleaseFlags</col>
-		<row><td>_BC1183EC_C73C_4BE9_AEF2_3A5A332820ED_</td><td>Microsoft .NET Framework 4.5 Full.prq</td><td/><td/><td/></row>
-		<row><td>_CC14FE70_16C4_4732_99D9_53B492C78E64_</td><td>Visual Studio 2010 Tools for Office Runtime.prq</td><td/><td/><td/></row>
+		<row><td>_6511DADB_7975_4A20_A49C_D76B3BC7F1E3_</td><td>Microsoft .NET Framework 4.5 Full.prq</td><td/><td/><td/></row>
+		<row><td>_79E57344_BC1F_467D_90F9_72AA362611DB_</td><td>Visual Studio 2010 Tools for Office Runtime.prq</td><td/><td/><td/></row>
 	</table>
 
 	<table name="ISSetupType">
