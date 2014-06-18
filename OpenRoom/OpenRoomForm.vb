@@ -43,6 +43,9 @@ Public Class OpenRoomForm
         AddNewRoom("Pismo Beach", "CR-Pismo Beach", PismoBeachCommandButton, "Floor2", True)
 
         ResetRoomButtons()
+
+        'Pulls starting info from appointment
+        GetAppointmentInfo()
     End Sub
 
     Private Sub FindRoomBtn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles FindRoomBtn.Click
@@ -166,5 +169,39 @@ Public Class OpenRoomForm
                     room.Enabled = Floor2CheckBox.Checked
             End Select
         Next (room)
+    End Sub
+
+    Private Sub GetAppointmentInfo()
+        Dim subject As String = ""
+        Dim startTime As Date
+        Dim endTime As Date
+
+        Dim meetingLength As Long
+
+        Dim item As Outlook.AppointmentItem = Globals.ThisAddIn.Application.ActiveInspector().CurrentItem
+        subject = item.Subject
+        startTime = item.Start
+        endTime = item.End
+
+        meetingLength = DateDiff(DateInterval.Minute, startTime, endTime)
+
+        Select Case meetingLength
+            Case 30
+                MeetingLengthComboBox.SelectedItem = "30 minutes"
+            Case 60
+                MeetingLengthComboBox.SelectedItem = "1 hour"
+            Case 90
+                MeetingLengthComboBox.SelectedItem = "1.5 hours"
+            Case 120
+                MeetingLengthComboBox.SelectedItem = "2 hours"
+            Case Else
+                System.Windows.Forms.MessageBox.Show("Selected meeting lenght is non standard or too long to be supported by OpenRoom")
+        End Select
+
+        System.Windows.Forms.MessageBox.Show("Current time: " & startTime & " End time: " & endTime & "Difference: " & meetingLength)
+
+        StartDatePicker.Value = startTime
+        StartTimePicker.Value = startTime
+
     End Sub
 End Class
