@@ -39,12 +39,15 @@ Public Class OpenRoomRibbon
 
     Public Sub OnActionCallback(ByVal control As Office.IRibbonControl)
         Select Case control.Id.Substring(0, 14)
-            Case Is = "btnRunOpenRoom"
-                'Windows.Forms.MessageBox.Show("You clicked " + control.Id + ". I am going to run OpenRoom.")
-
+            Case "btnRunOpenRoom"
                 'Creates new OpenRoom Form
                 Dim oForm As OpenRoomForm
-                oForm = New OpenRoomForm()
+                oForm = New OpenRoomForm(False)
+                oForm.Show()
+            Case "btnRunQuickRoom".Substring(0, 14)
+                'Creates new OpenRoom Form
+                Dim oForm As OpenRoomForm
+                oForm = New OpenRoomForm(True)
                 oForm.Show()
             Case Else
                 Windows.Forms.MessageBox.Show("You clicked a different control.")
@@ -56,6 +59,10 @@ Public Class OpenRoomRibbon
 
         Select imageName
             Case "OpenRoomIcon.png"
+                Return My.Resources.OpenRoomIcon.ToBitmap
+            Case "QuickRoomIcon.png"
+                Return My.Resources.QuickRoomIcon.ToBitmap
+            Case Else
                 Return My.Resources.OpenRoomBtnIcon
         End Select
 
@@ -84,28 +91,3 @@ Public Class OpenRoomRibbon
 #End Region
 
 End Class
-
-
-'Friend Class PictureConverter
-'    Inherits AxHost
-
-'    Private Sub New()
-'        MyBase.New(String.Empty)
-'    End Sub
-
-'    Public Shared Function ImageToPictureDisp( _
-'      ByVal image As Image) As stdole.IPictureDisp
-'        Return CType(GetIPictureDispFromPicture(image),  _
-'          stdole.IPictureDisp)
-'    End Function
-
-'    Public Shared Function IconToPictureDisp( _
-'      ByVal icon As Icon) As stdole.IPictureDisp
-'        Return ImageToPictureDisp(icon.ToBitmap())
-'    End Function
-
-'    Public Shared Function PictureDispToImage( _
-'      ByVal picture As stdole.IPictureDisp) As Image
-'        Return GetPictureFromIPicture(picture)
-'    End Function
-'End Class

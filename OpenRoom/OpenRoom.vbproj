@@ -292,6 +292,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\QuickRoomIcon.ico" />
     <None Include="Resources\OpenRoomIcon.png" />
     <Content Include="Resources\OpenRoomIcon.ico" />
     <EmbeddedResource Include="OpenRoomRibbon.xml">

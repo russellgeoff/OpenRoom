@@ -5,7 +5,7 @@
     Dim myRecipient As Outlook.Recipient
 
     'General Declarations
-    Const ORVersion = "2.0" 'OpenRoom Version
+    Const ORVersion = "2.1" 'OpenRoom Version
 
     Public Sub New()
         'Windows.Forms.MessageBox.Show("You've loaded the OpenRoom Engine")
@@ -18,26 +18,27 @@
     'Returns False if the room is free
     Public Function isRoomBusy(ByVal conferenceRoom As String, _
                                ByVal meetingDayAndTime As Date, _
-                               ByVal meetingLength As Integer, _
-                               ByVal meetingIncrement As Integer)
+                               ByVal meetingLength As Integer)
 
+        Dim mintuesPerChar As Integer = 1 '1 minute/character 
         Dim minutesFromStart As Integer
         Dim incrementsFromStart As Integer
 
         Dim myFBInfo As String
+        Dim meetingFBInfo As String
 
-        minutesFromStart = DateDiff("n", DateValue(meetingDayAndTime), meetingDayAndTime) 'Minutes from the start of the day until the meeting
-        incrementsFromStart = minutesFromStart / meetingIncrement 'Number of meeting increments from the start of the day (used as the start indext for the FreeBusy request
+        minutesFromStart = DateDiff("n", meetingDayAndTime.Date, meetingDayAndTime) 'Minutes from the start of the day until the meeting
+        incrementsFromStart = minutesFromStart / mintuesPerChar 'Number of meeting increments from the start of the day (used as the start indext for the FreeBusy request
 
         myNameSpace = myOlApp.GetNamespace("MAPI")
         myRecipient = myNameSpace.CreateRecipient(conferenceRoom)
 
-        myFBInfo = myRecipient.FreeBusy(meetingDayAndTime, meetingIncrement, False)
+        myFBInfo = myRecipient.FreeBusy(meetingDayAndTime.Date, mintuesPerChar, False) 'Free busy information from the start of the day
 
-        For i = 1 To Len(Mid(myFBInfo, incrementsFromStart + 1, meetingLength / meetingIncrement))
-            Dim test As String
-            test = Mid(myFBInfo, incrementsFromStart + i, 5)
-            If (Mid(myFBInfo, incrementsFromStart + i, 1) = "1") Then
+        meetingFBInfo = myFBInfo.Substring(incrementsFromStart, meetingLength / mintuesPerChar)
+
+        For i = 0 To meetingFBInfo.Length - 1
+            If (meetingFBInfo(i) = "1") Then
                 Return True
                 Exit Function
             End If
@@ -102,6 +103,15 @@
             .Send()
         End With
 
+        Return True
     End Function
 
+    Public Function RoundTimeMin(ByVal dateTime As Date, ByVal minInterval As Integer)
+        Dim datePart = dateTime.Date
+        Dim timePart = dateTime.TimeOfDay
+
+        timePart = TimeSpan.FromMinutes(Math.Floor((timePart.TotalMinutes + minInterval / 2) / minInterval) * minInterval)
+
+        Return datepart.Add(timepart)
+    End Function
 End Class

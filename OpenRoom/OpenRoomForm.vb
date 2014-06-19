@@ -6,7 +6,7 @@ Public Class OpenRoomForm
     Dim meetingDateAndTime As Date
     Dim meetingLength As Integer
 
-    Public Sub New()
+    Public Sub New(ByVal quickRoom As Boolean)
         ' This call is required by the Windows Form Designer.
         InitializeComponent()
 
@@ -24,8 +24,8 @@ Public Class OpenRoomForm
         MeetingLengthComboBox.SelectedItem = "30 minutes"
 
         'Setup Start Date and Time with Current Day and Time
-        StartDatePicker.Value = Date.Now()
-        StartTimePicker.Value = Date.Now()
+        StartDatePicker.Value = Date.Now
+        StartTimePicker.Value = OR_Engine.RoundTimeMin(Date.Now, 30)
 
         ' Adds all the rooms to the Rooms List
         AddNewRoom("Carmel", "CR-Carmel", CarmelCommandButton, "R&D", True)
@@ -44,8 +44,10 @@ Public Class OpenRoomForm
 
         ResetRoomButtons()
 
-        'Pulls starting info from appointment
-        GetAppointmentInfo()
+        If quickRoom Then
+            'Pulls starting info from appointment
+            GetAppointmentInfo()
+        End If
     End Sub
 
     Private Sub FindRoomBtn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles FindRoomBtn.Click
@@ -79,14 +81,16 @@ Public Class OpenRoomForm
         ' it will update the color of the button so that it reflects the room's schedule
         For Each room As Room In RoomList
             If room.Enabled = True Then
-                If (OR_Engine.isRoomBusy(room.OutlookName, meetingDateAndTime, meetingLength, 30) = False) Then
+                If (OR_Engine.isRoomBusy(room.OutlookName, meetingDateAndTime, meetingLength) = False) Then
                     room.Button.BackColor = Drawing.Color.Green
                     room.Button.Enabled = True
                 Else
                     room.Button.BackColor = Drawing.Color.Red
                     room.Button.Enabled = False
                 End If
+
                 Windows.Forms.Application.DoEvents() 'Eventually want to replace this with BackgroundWorker class and do multithreading
+
             End If
         Next room
     End Sub
@@ -198,10 +202,15 @@ Public Class OpenRoomForm
                 System.Windows.Forms.MessageBox.Show("Selected meeting lenght is non standard or too long to be supported by OpenRoom")
         End Select
 
-        System.Windows.Forms.MessageBox.Show("Current time: " & startTime & " End time: " & endTime & "Difference: " & meetingLength)
+        'System.Windows.Forms.MessageBox.Show("Current time: " & startTime & " End time: " & endTime & "Difference: " & meetingLength)
 
         StartDatePicker.Value = startTime
         StartTimePicker.Value = startTime
+    End Sub
 
+    Private Sub OnKeyDownHandler(ByVal sender As Object, ByVal e As KeyEventArgs) Handles MyBase.KeyDown
+        If (e.KeyValue = Keys.Return) Then
+            FindRoomBtn_Click(sender, e)
+        End If
     End Sub
 End Class

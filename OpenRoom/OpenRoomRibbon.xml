@@ -27,10 +27,10 @@
              screentip="Runs OpenRoom" onAction="OnActionCallback"
              supertip="Runs OpenRoom to find an open conference room at a specific time."
              size="large" image="OpenRoomIcon.png"/>
-          <button id="btnRunOpenRoomQuick" label="QuickRoom"
+          <button id="btnRunQuickRoom" label="QuickRoom"
              screentip="OpenRoom QuickRoom" onAction="OnActionCallback"
              supertip="Runs OpenRoom to find and book a conference room based on the current meeting information"
-             size="large" image="OpenRoomIcon.png"/>
+             size="large" image="QuickRoomIcon.png"/>
         </group>
       </tab>
     </tabs>

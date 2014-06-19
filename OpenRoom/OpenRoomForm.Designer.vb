@@ -63,6 +63,7 @@ Partial Class OpenRoomForm
         Me.UsageInfo = New System.Windows.Forms.CheckBox()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RunOpenRoomToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MeetingInformationGrpBox.SuspendLayout()
@@ -109,7 +110,7 @@ Partial Class OpenRoomForm
         Me.MeetingLengthComboBox.Location = New System.Drawing.Point(93, 51)
         Me.MeetingLengthComboBox.Name = "MeetingLengthComboBox"
         Me.MeetingLengthComboBox.Size = New System.Drawing.Size(180, 21)
-        Me.MeetingLengthComboBox.TabIndex = 1
+        Me.MeetingLengthComboBox.TabIndex = 3
         '
         'StartTimePicker
         '
@@ -119,7 +120,7 @@ Partial Class OpenRoomForm
         Me.StartTimePicker.Name = "StartTimePicker"
         Me.StartTimePicker.ShowUpDown = True
         Me.StartTimePicker.Size = New System.Drawing.Size(87, 20)
-        Me.StartTimePicker.TabIndex = 0
+        Me.StartTimePicker.TabIndex = 2
         '
         'StartDatePicker
         '
@@ -127,14 +128,14 @@ Partial Class OpenRoomForm
         Me.StartDatePicker.Location = New System.Drawing.Point(93, 19)
         Me.StartDatePicker.Name = "StartDatePicker"
         Me.StartDatePicker.Size = New System.Drawing.Size(87, 20)
-        Me.StartDatePicker.TabIndex = 0
+        Me.StartDatePicker.TabIndex = 1
         '
         'FindRoomBtn
         '
         Me.FindRoomBtn.Location = New System.Drawing.Point(330, 82)
         Me.FindRoomBtn.Name = "FindRoomBtn"
         Me.FindRoomBtn.Size = New System.Drawing.Size(153, 34)
-        Me.FindRoomBtn.TabIndex = 1
+        Me.FindRoomBtn.TabIndex = 0
         Me.FindRoomBtn.Text = "Find a Room!"
         Me.FindRoomBtn.UseVisualStyleBackColor = True
         '
@@ -156,7 +157,7 @@ Partial Class OpenRoomForm
         Me.RDCheckBox.Location = New System.Drawing.Point(12, 122)
         Me.RDCheckBox.Name = "RDCheckBox"
         Me.RDCheckBox.Size = New System.Drawing.Size(89, 17)
-        Me.RDCheckBox.TabIndex = 3
+        Me.RDCheckBox.TabIndex = 4
         Me.RDCheckBox.Text = "Floor 1 - R&&D"
         Me.RDCheckBox.UseVisualStyleBackColor = True
         '
@@ -168,7 +169,7 @@ Partial Class OpenRoomForm
         Me.OpsCheckBox.Location = New System.Drawing.Point(176, 122)
         Me.OpsCheckBox.Name = "OpsCheckBox"
         Me.OpsCheckBox.Size = New System.Drawing.Size(86, 17)
-        Me.OpsCheckBox.TabIndex = 3
+        Me.OpsCheckBox.TabIndex = 5
         Me.OpsCheckBox.Text = "Floor 1 - Ops"
         Me.OpsCheckBox.UseVisualStyleBackColor = True
         '
@@ -180,7 +181,7 @@ Partial Class OpenRoomForm
         Me.Floor2CheckBox.Location = New System.Drawing.Point(362, 122)
         Me.Floor2CheckBox.Name = "Floor2CheckBox"
         Me.Floor2CheckBox.Size = New System.Drawing.Size(58, 17)
-        Me.Floor2CheckBox.TabIndex = 3
+        Me.Floor2CheckBox.TabIndex = 6
         Me.Floor2CheckBox.Text = "Floor 2"
         Me.Floor2CheckBox.UseVisualStyleBackColor = True
         '
@@ -189,7 +190,7 @@ Partial Class OpenRoomForm
         Me.CarmelCommandButton.Location = New System.Drawing.Point(12, 145)
         Me.CarmelCommandButton.Name = "CarmelCommandButton"
         Me.CarmelCommandButton.Size = New System.Drawing.Size(25, 25)
-        Me.CarmelCommandButton.TabIndex = 4
+        Me.CarmelCommandButton.TabIndex = 7
         Me.CarmelCommandButton.UseVisualStyleBackColor = True
         '
         'MendocinoCommandButton
@@ -197,7 +198,7 @@ Partial Class OpenRoomForm
         Me.MendocinoCommandButton.Location = New System.Drawing.Point(12, 183)
         Me.MendocinoCommandButton.Name = "MendocinoCommandButton"
         Me.MendocinoCommandButton.Size = New System.Drawing.Size(25, 25)
-        Me.MendocinoCommandButton.TabIndex = 4
+        Me.MendocinoCommandButton.TabIndex = 8
         Me.MendocinoCommandButton.UseVisualStyleBackColor = True
         '
         'NapaCommandButton
@@ -205,7 +206,7 @@ Partial Class OpenRoomForm
         Me.NapaCommandButton.Location = New System.Drawing.Point(12, 221)
         Me.NapaCommandButton.Name = "NapaCommandButton"
         Me.NapaCommandButton.Size = New System.Drawing.Size(25, 25)
-        Me.NapaCommandButton.TabIndex = 4
+        Me.NapaCommandButton.TabIndex = 9
         Me.NapaCommandButton.UseVisualStyleBackColor = True
         '
         'PinnaclesCommandButton
@@ -213,7 +214,7 @@ Partial Class OpenRoomForm
         Me.PinnaclesCommandButton.Location = New System.Drawing.Point(12, 259)
         Me.PinnaclesCommandButton.Name = "PinnaclesCommandButton"
         Me.PinnaclesCommandButton.Size = New System.Drawing.Size(25, 25)
-        Me.PinnaclesCommandButton.TabIndex = 4
+        Me.PinnaclesCommandButton.TabIndex = 10
         Me.PinnaclesCommandButton.UseVisualStyleBackColor = True
         '
         'TahoeCommandButton
@@ -221,7 +222,7 @@ Partial Class OpenRoomForm
         Me.TahoeCommandButton.Location = New System.Drawing.Point(12, 297)
         Me.TahoeCommandButton.Name = "TahoeCommandButton"
         Me.TahoeCommandButton.Size = New System.Drawing.Size(25, 25)
-        Me.TahoeCommandButton.TabIndex = 4
+        Me.TahoeCommandButton.TabIndex = 11
         Me.TahoeCommandButton.UseVisualStyleBackColor = True
         '
         'BigSurCommandButton
@@ -229,7 +230,7 @@ Partial Class OpenRoomForm
         Me.BigSurCommandButton.Location = New System.Drawing.Point(176, 145)
         Me.BigSurCommandButton.Name = "BigSurCommandButton"
         Me.BigSurCommandButton.Size = New System.Drawing.Size(25, 25)
-        Me.BigSurCommandButton.TabIndex = 4
+        Me.BigSurCommandButton.TabIndex = 13
         Me.BigSurCommandButton.UseVisualStyleBackColor = True
         '
         'SantaCruzCommandButton
@@ -237,7 +238,7 @@ Partial Class OpenRoomForm
         Me.SantaCruzCommandButton.Location = New System.Drawing.Point(176, 183)
         Me.SantaCruzCommandButton.Name = "SantaCruzCommandButton"
         Me.SantaCruzCommandButton.Size = New System.Drawing.Size(25, 25)
-        Me.SantaCruzCommandButton.TabIndex = 4
+        Me.SantaCruzCommandButton.TabIndex = 14
         Me.SantaCruzCommandButton.UseVisualStyleBackColor = True
         '
         'ShastaCommandButton
@@ -245,7 +246,7 @@ Partial Class OpenRoomForm
         Me.ShastaCommandButton.Location = New System.Drawing.Point(361, 143)
         Me.ShastaCommandButton.Name = "ShastaCommandButton"
         Me.ShastaCommandButton.Size = New System.Drawing.Size(25, 25)
-        Me.ShastaCommandButton.TabIndex = 4
+        Me.ShastaCommandButton.TabIndex = 15
         Me.ShastaCommandButton.UseVisualStyleBackColor = True
         '
         'SquawValleyCommandButton
@@ -253,7 +254,7 @@ Partial Class OpenRoomForm
         Me.SquawValleyCommandButton.Location = New System.Drawing.Point(361, 181)
         Me.SquawValleyCommandButton.Name = "SquawValleyCommandButton"
         Me.SquawValleyCommandButton.Size = New System.Drawing.Size(25, 25)
-        Me.SquawValleyCommandButton.TabIndex = 4
+        Me.SquawValleyCommandButton.TabIndex = 16
         Me.SquawValleyCommandButton.UseVisualStyleBackColor = True
         '
         'JoshuaTreeCommandButton
@@ -261,7 +262,7 @@ Partial Class OpenRoomForm
         Me.JoshuaTreeCommandButton.Location = New System.Drawing.Point(361, 219)
         Me.JoshuaTreeCommandButton.Name = "JoshuaTreeCommandButton"
         Me.JoshuaTreeCommandButton.Size = New System.Drawing.Size(25, 25)
-        Me.JoshuaTreeCommandButton.TabIndex = 4
+        Me.JoshuaTreeCommandButton.TabIndex = 17
         Me.JoshuaTreeCommandButton.UseVisualStyleBackColor = True
         '
         'MontereyCommandButton
@@ -269,7 +270,7 @@ Partial Class OpenRoomForm
         Me.MontereyCommandButton.Location = New System.Drawing.Point(361, 257)
         Me.MontereyCommandButton.Name = "MontereyCommandButton"
         Me.MontereyCommandButton.Size = New System.Drawing.Size(25, 25)
-        Me.MontereyCommandButton.TabIndex = 4
+        Me.MontereyCommandButton.TabIndex = 18
         Me.MontereyCommandButton.UseVisualStyleBackColor = True
         '
         'PismoBeachCommandButton
@@ -277,7 +278,7 @@ Partial Class OpenRoomForm
         Me.PismoBeachCommandButton.Location = New System.Drawing.Point(361, 295)
         Me.PismoBeachCommandButton.Name = "PismoBeachCommandButton"
         Me.PismoBeachCommandButton.Size = New System.Drawing.Size(25, 25)
-        Me.PismoBeachCommandButton.TabIndex = 4
+        Me.PismoBeachCommandButton.TabIndex = 19
         Me.PismoBeachCommandButton.UseVisualStyleBackColor = True
         '
         'CarmelTxtBox
@@ -393,7 +394,7 @@ Partial Class OpenRoomForm
         Me.DRRoomCommandButton.Location = New System.Drawing.Point(12, 333)
         Me.DRRoomCommandButton.Name = "DRRoomCommandButton"
         Me.DRRoomCommandButton.Size = New System.Drawing.Size(25, 25)
-        Me.DRRoomCommandButton.TabIndex = 4
+        Me.DRRoomCommandButton.TabIndex = 12
         Me.DRRoomCommandButton.UseVisualStyleBackColor = True
         '
         'DRRoomTxtBox
@@ -413,7 +414,7 @@ Partial Class OpenRoomForm
         Me.UsageInfo.Location = New System.Drawing.Point(354, 349)
         Me.UsageInfo.Name = "UsageInfo"
         Me.UsageInfo.Size = New System.Drawing.Size(140, 17)
-        Me.UsageInfo.TabIndex = 6
+        Me.UsageInfo.TabIndex = 20
         Me.UsageInfo.Text = "Send Basic Usage Data"
         Me.UsageInfo.UseVisualStyleBackColor = True
         '
@@ -428,16 +429,24 @@ Partial Class OpenRoomForm
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RunOpenRoomToolStripMenuItem, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
         '
+        'RunOpenRoomToolStripMenuItem
+        '
+        Me.RunOpenRoomToolStripMenuItem.Name = "RunOpenRoomToolStripMenuItem"
+        Me.RunOpenRoomToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
+        Me.RunOpenRoomToolStripMenuItem.Size = New System.Drawing.Size(182, 22)
+        Me.RunOpenRoomToolStripMenuItem.Text = "Find a Room"
+        '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.ExitToolStripMenuItem.Text = "Exit"
+        Me.ExitToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.E), System.Windows.Forms.Keys)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(182, 22)
+        Me.ExitToolStripMenuItem.Text = "&Exit"
         '
         'AboutToolStripMenuItem
         '
@@ -485,6 +494,7 @@ Partial Class OpenRoomForm
         Me.Controls.Add(Me.MeetingInformationGrpBox)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.KeyPreview = True
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "OpenRoomForm"
         Me.Text = "OpenRoom by Geoff Russell"
@@ -539,4 +549,5 @@ Partial Class OpenRoomForm
     Friend WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ExitToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents AboutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents RunOpenRoomToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 End Class
