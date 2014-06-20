@@ -43,14 +43,16 @@ Public Class OpenRoomForm
         AddNewRoom("Pismo Beach", "CR-Pismo Beach", PismoBeachCommandButton, "Floor2", True)
 
         ResetRoomButtons()
+        Me.Show()
 
         If quickRoom Then
             'Pulls starting info from appointment
             GetAppointmentInfo()
+            OpenRoomSearch()
         End If
     End Sub
 
-    Private Sub FindRoomBtn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles FindRoomBtn.Click
+    Private Sub OpenRoomSearch()
 
         ResetRoomButtons()
 
@@ -89,10 +91,15 @@ Public Class OpenRoomForm
                     room.Button.Enabled = False
                 End If
 
+                ProgressBar.Value = ((RoomList.IndexOf(room) + 1) / RoomList.Count) * 100
                 Windows.Forms.Application.DoEvents() 'Eventually want to replace this with BackgroundWorker class and do multithreading
 
             End If
         Next room
+    End Sub
+
+    Private Sub FindRoomBtn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles FindRoomBtn.Click
+        OpenRoomSearch()
     End Sub
 
 

@@ -43,12 +43,10 @@ Public Class OpenRoomRibbon
                 'Creates new OpenRoom Form
                 Dim oForm As OpenRoomForm
                 oForm = New OpenRoomForm(False)
-                oForm.Show()
             Case "btnRunQuickRoom".Substring(0, 14)
                 'Creates new OpenRoom Form
                 Dim oForm As OpenRoomForm
                 oForm = New OpenRoomForm(True)
-                oForm.Show()
             Case Else
                 Windows.Forms.MessageBox.Show("You clicked a different control.")
         End Select

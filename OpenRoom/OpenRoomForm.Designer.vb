@@ -66,6 +66,7 @@ Partial Class OpenRoomForm
         Me.RunOpenRoomToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ProgressBar = New System.Windows.Forms.ProgressBar()
         Me.MeetingInformationGrpBox.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
@@ -454,11 +455,19 @@ Partial Class OpenRoomForm
         Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(52, 20)
         Me.AboutToolStripMenuItem.Text = "About"
         '
+        'ProgressBar
+        '
+        Me.ProgressBar.Location = New System.Drawing.Point(0, 372)
+        Me.ProgressBar.Name = "ProgressBar"
+        Me.ProgressBar.Size = New System.Drawing.Size(506, 33)
+        Me.ProgressBar.TabIndex = 21
+        '
         'OpenRoomForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(506, 378)
+        Me.ClientSize = New System.Drawing.Size(506, 401)
+        Me.Controls.Add(Me.ProgressBar)
         Me.Controls.Add(Me.UsageInfo)
         Me.Controls.Add(Me.PismoBeachTxtBox)
         Me.Controls.Add(Me.MontereyTxtBox)
@@ -550,4 +559,5 @@ Partial Class OpenRoomForm
     Friend WithEvents ExitToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents AboutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents RunOpenRoomToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ProgressBar As System.Windows.Forms.ProgressBar
 End Class
