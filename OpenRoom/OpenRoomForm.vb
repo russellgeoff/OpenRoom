@@ -1,14 +1,21 @@
 ﻿Imports System.Windows.Forms
+Imports System.ComponentModel
 
 Public Class OpenRoomForm
     Dim OR_Engine As OpenRoom_Engine 'Engine for determining if a room is open and to book a room
     Public RoomList As New List(Of Room)(13)
     Dim meetingDateAndTime As Date
     Dim meetingLength As Integer
+    Dim bw As BackgroundWorker = New BackgroundWorker
 
     Public Sub New(ByVal quickRoom As Boolean)
         ' This call is required by the Windows Form Designer.
         InitializeComponent()
+
+        bw.WorkerSupportsCancellation = False
+        bw.WorkerReportsProgress = False
+
+        AddHandler bw.DoWork, AddressOf bw_DoWork
 
         'Create a new instance of the OpenRoom Engine
         OR_Engine = New OpenRoom_Engine
@@ -52,6 +59,13 @@ Public Class OpenRoomForm
         End If
     End Sub
 
+    Private Sub bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
+        Dim arguments As ThreadArguments = e.Argument
+
+        arguments.result = OR_Engine.isRoomBusy(arguments.room, arguments.meetingDateAndTime, arguments.meetingLength)
+
+    End Sub
+
     Private Sub OpenRoomSearch()
 
         ResetRoomButtons()
@@ -78,11 +92,24 @@ Public Class OpenRoomForm
                 meetingLength = 120
         End Select
 
+        'Replace the time consuming operation below with bw.RunWorkerAsync()
+
         ' For loop that goes through RoomList and checks if each one is available at the time requested
         ' First it will grab the conference room name from the list, then after getting a status back
         ' it will update the color of the button so that it reflects the room's schedule
         For Each room As Room In RoomList
             If room.Enabled = True Then
+                Dim arguments As ThreadArguments = New ThreadArguments
+
+                arguments.room = room.OutlookName
+                arguments.meetingDateAndTime = meetingDateAndTime
+                arguments.meetingLength = meetingLength
+
+                'If Not bw.IsBusy = True Then
+                '    bw.RunWorkerAsync(arguments)
+                'End If
+
+                'If (arguments.result = False) Then
                 If (OR_Engine.isRoomBusy(room.OutlookName, meetingDateAndTime, meetingLength) = False) Then
                     room.Button.BackColor = Drawing.Color.Green
                     room.Button.Enabled = True
@@ -162,7 +189,7 @@ Public Class OpenRoomForm
             room.Button.Enabled = False
         Next (room)
 
-        Refresh()
+        'Refresh()
     End Sub
 
     Private Sub LocationCheckedChanged(sender As Object, e As EventArgs) Handles _
@@ -216,8 +243,11 @@ Public Class OpenRoomForm
     End Sub
 
     Private Sub OnKeyDownHandler(ByVal sender As Object, ByVal e As KeyEventArgs) Handles MyBase.KeyDown
-        If (e.KeyValue = Keys.Return) Then
-            FindRoomBtn_Click(sender, e)
-        End If
+        Select Case e.KeyValue
+            Case Keys.Return
+                FindRoomBtn_Click(sender, e)
+            Case Keys.Escape
+                Me.Close()
+        End Select
     End Sub
 End Class

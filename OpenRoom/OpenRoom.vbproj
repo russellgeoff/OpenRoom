@@ -259,6 +259,7 @@
     <Compile Include="ThisAddIn.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ThreadArguments.vb" />
     <EmbeddedResource Include="OpenRoomForm.resx">
       <DependentUpon>OpenRoomForm.vb</DependentUpon>
     </EmbeddedResource>
