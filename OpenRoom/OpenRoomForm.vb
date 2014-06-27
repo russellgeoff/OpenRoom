@@ -2,15 +2,17 @@
 Imports System.ComponentModel
 
 Public Class OpenRoomForm
-    Dim OR_Engine As OpenRoom_Engine 'Engine for determining if a room is open and to book a room
+    Dim OR_Engine As New OpenRoom_Engine 'Engine for determining if a room is open and to book a room
     Public RoomList As New List(Of Room) '(13)
     Dim meetingDateAndTime As Date
     Dim meetingLength As Integer
     Dim bw As BackgroundWorker = New BackgroundWorker
+    Dim quickRoom As Boolean
+    Dim appointmentItem As Outlook.AppointmentItem
 
     Public Sub New(ByVal quickRoom As Boolean)
         ' This call is required by the Windows Form Designer.
-        InitializeComponent()
+        Me.InitializeComponent()
 
         bw.WorkerSupportsCancellation = True
         bw.WorkerReportsProgress = True
@@ -20,7 +22,7 @@ Public Class OpenRoomForm
         AddHandler bw.RunWorkerCompleted, AddressOf bw_RunWorkerCompleted
 
         'Create a new instance of the OpenRoom Engine
-        OR_Engine = New OpenRoom_Engine
+        Me.OR_Engine = New OpenRoom_Engine()
 
         'Setup Meeting Length Box
         With MeetingLengthComboBox.Items
@@ -30,34 +32,37 @@ Public Class OpenRoomForm
             .Add("2 hours")
         End With
 
-        MeetingLengthComboBox.SelectedItem = "30 minutes"
+        Me.MeetingLengthComboBox.SelectedItem = "30 minutes"
 
         'Setup Start Date and Time with Current Day and Time
-        StartDatePicker.Value = Date.Now
-        StartTimePicker.Value = OR_Engine.RoundTimeMin(Date.Now, 30)
+        Me.StartDatePicker.Value = Date.Now
+        Me.StartTimePicker.Value = OR_Engine.RoundTimeMin(Date.Now, 30)
 
         ' Adds all the rooms to the Rooms List
-        AddNewRoom("Carmel", "CR-Carmel", CarmelCommandButton, "R&D", True)
-        AddNewRoom("Mendocino", "CR-Mendocino", MendocinoCommandButton, "R&D", True)
-        AddNewRoom("Napa", "CR-Napa", NapaCommandButton, "R&D", True)
-        AddNewRoom("Pinnacles", "CR-Pinnacles", PinnaclesCommandButton, "R&D", True)
-        AddNewRoom("Tahoe", "CR-Tahoe", TahoeCommandButton, "R&D", True)
-        AddNewRoom("Design Review Room", "CR-Design Review Room", DRRoomCommandButton, "R&D", True)
-        AddNewRoom("Big Sur", "CR-Big Sur", BigSurCommandButton, "Ops", True)
-        AddNewRoom("Santa Cruz", "CR-Santa Cruz", SantaCruzCommandButton, "Ops", True)
-        AddNewRoom("Shasta", "CR-Shasta", ShastaCommandButton, "Floor2", True)
-        AddNewRoom("Squaw Valley", "CR-Squaw Valley", SquawValleyCommandButton, "Floor2", True)
-        AddNewRoom("Joshua Tree", "CR-Joshua Tree", JoshuaTreeCommandButton, "Floor2", True)
-        AddNewRoom("Monterey", "CR-Monterey", MontereyCommandButton, "Floor2", True)
-        AddNewRoom("Pismo Beach", "CR-Pismo Beach", PismoBeachCommandButton, "Floor2", True)
+        Me.AddNewRoom("Carmel", "CR-Carmel", CarmelCommandButton, "R&D", True)
+        Me.AddNewRoom("Mendocino", "CR-Mendocino", MendocinoCommandButton, "R&D", True)
+        Me.AddNewRoom("Napa", "CR-Napa", NapaCommandButton, "R&D", True)
+        Me.AddNewRoom("Pinnacles", "CR-Pinnacles", PinnaclesCommandButton, "R&D", True)
+        Me.AddNewRoom("Tahoe", "CR-Tahoe", TahoeCommandButton, "R&D", True)
+        Me.AddNewRoom("Design Review Room", "CR-Design Review Room", DRRoomCommandButton, "R&D", True)
+        Me.AddNewRoom("Big Sur", "CR-Big Sur", BigSurCommandButton, "Ops", True)
+        Me.AddNewRoom("Santa Cruz", "CR-Santa Cruz", SantaCruzCommandButton, "Ops", True)
+        Me.AddNewRoom("Shasta", "CR-Shasta", ShastaCommandButton, "Floor2", True)
+        Me.AddNewRoom("Squaw Valley", "CR-Squaw Valley", SquawValleyCommandButton, "Floor2", True)
+        Me.AddNewRoom("Joshua Tree", "CR-Joshua Tree", JoshuaTreeCommandButton, "Floor2", True)
+        Me.AddNewRoom("Monterey", "CR-Monterey", MontereyCommandButton, "Floor2", True)
+        Me.AddNewRoom("Pismo Beach", "CR-Pismo Beach", PismoBeachCommandButton, "Floor2", True)
 
-        ResetRoomButtons()
+        Me.ResetRooms()
         Me.Show()
 
-        If quickRoom Then
+        Me.quickRoom = quickRoom
+
+        If Me.quickRoom Then
+            Me.appointmentItem = Globals.ThisAddIn.Application.ActiveInspector().CurrentItem
             'Pulls starting info from appointment
-            GetAppointmentInfo()
-            OpenRoomSearch()
+            Me.GetAppointmentInfo()
+            Me.OpenRoomSearch()
         End If
     End Sub
 
@@ -108,19 +113,19 @@ Public Class OpenRoomForm
         If room.Available = -1 Then
             'Do nothing since the room hasnot been checked
         ElseIf room.Available = 1 Then
-            If room.Button.InvokeRequired = True Then
-                'MsgBox("True")
-                room.Button.BackColor = Drawing.Color.Green
-                room.ButtonEnabled = True
-                'room.Button.Enabled = True ' think this needs to have an invoke 
-            End If
+            'If room.Button.InvokeRequired = True Then
+            'MsgBox("True")
+            room.Button.BackColor = Drawing.Color.Green
+            room.ButtonEnabled = True
+            'room.Button.Enabled = True ' think this needs to have an invoke 
+            'End If
         ElseIf room.Available = 0 Then
-            If room.Button.InvokeRequired = True Then
-                'MsgBox("False")
-                room.Button.BackColor = Drawing.Color.Red
-                room.ButtonEnabled = False
-                'room.Button.Enabled = False
-            End If
+            'If room.Button.InvokeRequired = True Then
+            'MsgBox("False")
+            room.Button.BackColor = Drawing.Color.Red
+            room.ButtonEnabled = False
+            'room.Button.Enabled = False
+            'End If
         End If
             'Next
     End Sub
@@ -140,28 +145,28 @@ Public Class OpenRoomForm
 
     Private Sub OpenRoomSearch()
 
-        ResetRoomButtons()
+        Me.ResetRooms()
 
         'Sends usage email
-        If UsageInfo.Checked Then 'Only sends usage info if user opts in
-            OR_Engine.SendUsageEmail(0) 'Sends search usage info
+        If Me.UsageInfo.Checked Then 'Only sends usage info if user opts in
+            Me.OR_Engine.SendUsageEmail(OpenRoom_Engine.SEARCH_EMAIL) 'Sends search usage info
         End If
 
         'Get user input from form
 
-        meetingDateAndTime = CDate(Format(StartDatePicker.Value, "d") _
+        Me.meetingDateAndTime = CDate(Format(StartDatePicker.Value, "d") _
                             & " " & Format(StartTimePicker.Value, "t")) 'Get date and time of meeting
 
         'Get meeting length
-        Select Case MeetingLengthComboBox.SelectedItem
+        Select Case Me.MeetingLengthComboBox.SelectedItem
             Case "30 minutes"
-                meetingLength = 30
+                Me.meetingLength = 30
             Case "1 hour"
-                meetingLength = 60
+                Me.meetingLength = 60
             Case "1.5 hours"
-                meetingLength = 90
+                Me.meetingLength = 90
             Case "2 hours"
-                meetingLength = 120
+                Me.meetingLength = 120
         End Select
 
         'Dim RoomListCopy As List(Of Room) = New List(Of Room)
@@ -171,9 +176,9 @@ Public Class OpenRoomForm
         'Next
 
         Dim arguments As ThreadArguments = New ThreadArguments
-        arguments.roomList = RoomList
-        arguments.meetingDateAndTime = meetingDateAndTime
-        arguments.meetingLength = meetingLength
+        arguments.roomList = Me.RoomList
+        arguments.meetingDateAndTime = Me.meetingDateAndTime
+        arguments.meetingLength = Me.meetingLength
 
         If Not bw.IsBusy = True Then
             bw.RunWorkerAsync(arguments)
@@ -183,7 +188,7 @@ Public Class OpenRoomForm
     End Sub
 
     Private Sub FindRoomBtn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles FindRoomBtn.Click
-        OpenRoomSearch()
+        Me.OpenRoomSearch()
     End Sub
 
 
@@ -216,8 +221,13 @@ Public Class OpenRoomForm
                 roomClicked = room.OutlookName
                 If (OR_Engine.BookConferenceRoom(roomClicked, meetingDateAndTime, meetingLength)) Then
                     System.Windows.Forms.MessageBox.Show("You successfully booked " & roomClicked)
-                    If UsageInfo.Checked Then 'Only sends usage info if user opts in
-                        OR_Engine.SendUsageEmail(1)
+
+                    If Me.quickRoom Then
+                        Me.appointmentItem.Location = roomClicked
+                    End If
+
+                    If Me.UsageInfo.Checked Then 'Only sends usage info if user opts in
+                        Me.OR_Engine.SendUsageEmail(OpenRoom_Engine.BOOKING_EMAIL)
                     End If
                 End If
             End If
@@ -239,7 +249,7 @@ Public Class OpenRoomForm
         RoomList.Add(room)
     End Sub
 
-    Private Sub ResetRoomButtons()
+    Private Sub ResetRooms()
         'Reset all the room button's color & enabled status
         For Each room As Room In RoomList
             room.Button.BackColor = Drawing.SystemColors.Control
@@ -247,7 +257,7 @@ Public Class OpenRoomForm
             room.ButtonEnabled = False
         Next (room)
 
-        'Refresh()
+        Me.Refresh()
     End Sub
 
     Private Sub LocationCheckedChanged(sender As Object, e As EventArgs) Handles _
@@ -271,46 +281,44 @@ Public Class OpenRoomForm
         Dim subject As String = ""
         Dim startTime As Date
         Dim endTime As Date
-
         Dim meetingLength As Long
 
-        Dim item As Outlook.AppointmentItem = Globals.ThisAddIn.Application.ActiveInspector().CurrentItem
-        subject = item.Subject
-        startTime = item.Start
-        endTime = item.End
+        subject = Me.appointmentItem.Subject
+        startTime = Me.appointmentItem.Start
+        endTime = Me.appointmentItem.End
 
         meetingLength = DateDiff(DateInterval.Minute, startTime, endTime)
 
         Select Case meetingLength
             Case 30
-                MeetingLengthComboBox.SelectedItem = "30 minutes"
+                Me.MeetingLengthComboBox.SelectedItem = "30 minutes"
             Case 60
-                MeetingLengthComboBox.SelectedItem = "1 hour"
+                Me.MeetingLengthComboBox.SelectedItem = "1 hour"
             Case 90
-                MeetingLengthComboBox.SelectedItem = "1.5 hours"
+                Me.MeetingLengthComboBox.SelectedItem = "1.5 hours"
             Case 120
-                MeetingLengthComboBox.SelectedItem = "2 hours"
+                Me.MeetingLengthComboBox.SelectedItem = "2 hours"
             Case Else
                 System.Windows.Forms.MessageBox.Show("Selected meeting lenght is non standard or too long to be supported by OpenRoom")
         End Select
 
         'System.Windows.Forms.MessageBox.Show("Current time: " & startTime & " End time: " & endTime & "Difference: " & meetingLength)
 
-        StartDatePicker.Value = startTime
-        StartTimePicker.Value = startTime
+        Me.StartDatePicker.Value = startTime
+        Me.StartTimePicker.Value = startTime
     End Sub
 
     Private Sub OnKeyDownHandler(ByVal sender As Object, ByVal e As KeyEventArgs) Handles MyBase.KeyDown
         Select Case e.KeyValue
             Case Keys.Return
-                FindRoomBtn_Click(sender, e)
+                Me.FindRoomBtn_Click(sender, e)
             Case Keys.Escape
                 Me.Close()
         End Select
     End Sub
 
-    Public Overloads Sub Close()
-        'Cancels the backgroundworker when the application closes
+    Protected Overrides Sub Finalize()
+        MyBase.Finalize()
         bw.CancelAsync()
     End Sub
 End Class

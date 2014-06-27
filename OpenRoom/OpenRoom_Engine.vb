@@ -4,6 +4,9 @@
     Dim myNameSpace As Outlook.NameSpace
     Dim myRecipient As Outlook.Recipient
 
+    Public Const SEARCH_EMAIL As Integer = 0
+    Public Const BOOKING_EMAIL As Integer = 1
+
     'General Declarations
     Const ORVersion = "2.1" 'OpenRoom Version
 
@@ -77,11 +80,11 @@
         Dim body As String
 
         Select Case type
-            Case 0 'Sends usage information about the search
+            Case SEARCH_EMAIL 'Sends usage information about the search
                 subject = "[Open Room] A search was just performed with OpenRoom v" & ORVersion
                 body = "A search was performed with OpenRoom v" & ORVersion & "!" &
                     vbNewLine & vbNewLine & "This is a message to understand the usage of OpenRoom and will be anonymized before sharing."
-            Case 1 'Sends usage information about the booked room
+            Case BOOKING_EMAIL 'Sends usage information about the booked room
                 subject = "[Open Room] A room was just booked with OpenRoom v" & ORVersion
                 body = "A room was just booked with OpenRoom v" & ORVersion & "!" &
                     vbNewLine & vbNewLine & "This is a message to understand the usage of OpenRoom and will be anonymized before sharing."
