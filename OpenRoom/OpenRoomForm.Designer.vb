@@ -67,6 +67,7 @@ Partial Class OpenRoomForm
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ProgressBar = New System.Windows.Forms.ProgressBar()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.MeetingInformationGrpBox.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
@@ -155,7 +156,7 @@ Partial Class OpenRoomForm
         Me.RDCheckBox.AutoSize = True
         Me.RDCheckBox.Checked = True
         Me.RDCheckBox.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.RDCheckBox.Location = New System.Drawing.Point(12, 122)
+        Me.RDCheckBox.Location = New System.Drawing.Point(12, 145)
         Me.RDCheckBox.Name = "RDCheckBox"
         Me.RDCheckBox.Size = New System.Drawing.Size(89, 17)
         Me.RDCheckBox.TabIndex = 4
@@ -167,7 +168,7 @@ Partial Class OpenRoomForm
         Me.OpsCheckBox.AutoSize = True
         Me.OpsCheckBox.Checked = True
         Me.OpsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.OpsCheckBox.Location = New System.Drawing.Point(176, 122)
+        Me.OpsCheckBox.Location = New System.Drawing.Point(176, 145)
         Me.OpsCheckBox.Name = "OpsCheckBox"
         Me.OpsCheckBox.Size = New System.Drawing.Size(86, 17)
         Me.OpsCheckBox.TabIndex = 5
@@ -179,7 +180,7 @@ Partial Class OpenRoomForm
         Me.Floor2CheckBox.AutoSize = True
         Me.Floor2CheckBox.Checked = True
         Me.Floor2CheckBox.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Floor2CheckBox.Location = New System.Drawing.Point(362, 122)
+        Me.Floor2CheckBox.Location = New System.Drawing.Point(362, 145)
         Me.Floor2CheckBox.Name = "Floor2CheckBox"
         Me.Floor2CheckBox.Size = New System.Drawing.Size(58, 17)
         Me.Floor2CheckBox.TabIndex = 6
@@ -188,7 +189,7 @@ Partial Class OpenRoomForm
         '
         'CarmelCommandButton
         '
-        Me.CarmelCommandButton.Location = New System.Drawing.Point(12, 145)
+        Me.CarmelCommandButton.Location = New System.Drawing.Point(12, 168)
         Me.CarmelCommandButton.Name = "CarmelCommandButton"
         Me.CarmelCommandButton.Size = New System.Drawing.Size(25, 25)
         Me.CarmelCommandButton.TabIndex = 7
@@ -196,7 +197,7 @@ Partial Class OpenRoomForm
         '
         'MendocinoCommandButton
         '
-        Me.MendocinoCommandButton.Location = New System.Drawing.Point(12, 183)
+        Me.MendocinoCommandButton.Location = New System.Drawing.Point(12, 206)
         Me.MendocinoCommandButton.Name = "MendocinoCommandButton"
         Me.MendocinoCommandButton.Size = New System.Drawing.Size(25, 25)
         Me.MendocinoCommandButton.TabIndex = 8
@@ -204,7 +205,7 @@ Partial Class OpenRoomForm
         '
         'NapaCommandButton
         '
-        Me.NapaCommandButton.Location = New System.Drawing.Point(12, 221)
+        Me.NapaCommandButton.Location = New System.Drawing.Point(12, 244)
         Me.NapaCommandButton.Name = "NapaCommandButton"
         Me.NapaCommandButton.Size = New System.Drawing.Size(25, 25)
         Me.NapaCommandButton.TabIndex = 9
@@ -212,7 +213,7 @@ Partial Class OpenRoomForm
         '
         'PinnaclesCommandButton
         '
-        Me.PinnaclesCommandButton.Location = New System.Drawing.Point(12, 259)
+        Me.PinnaclesCommandButton.Location = New System.Drawing.Point(12, 282)
         Me.PinnaclesCommandButton.Name = "PinnaclesCommandButton"
         Me.PinnaclesCommandButton.Size = New System.Drawing.Size(25, 25)
         Me.PinnaclesCommandButton.TabIndex = 10
@@ -220,7 +221,7 @@ Partial Class OpenRoomForm
         '
         'TahoeCommandButton
         '
-        Me.TahoeCommandButton.Location = New System.Drawing.Point(12, 297)
+        Me.TahoeCommandButton.Location = New System.Drawing.Point(12, 320)
         Me.TahoeCommandButton.Name = "TahoeCommandButton"
         Me.TahoeCommandButton.Size = New System.Drawing.Size(25, 25)
         Me.TahoeCommandButton.TabIndex = 11
@@ -228,7 +229,7 @@ Partial Class OpenRoomForm
         '
         'BigSurCommandButton
         '
-        Me.BigSurCommandButton.Location = New System.Drawing.Point(176, 145)
+        Me.BigSurCommandButton.Location = New System.Drawing.Point(176, 168)
         Me.BigSurCommandButton.Name = "BigSurCommandButton"
         Me.BigSurCommandButton.Size = New System.Drawing.Size(25, 25)
         Me.BigSurCommandButton.TabIndex = 13
@@ -236,7 +237,7 @@ Partial Class OpenRoomForm
         '
         'SantaCruzCommandButton
         '
-        Me.SantaCruzCommandButton.Location = New System.Drawing.Point(176, 183)
+        Me.SantaCruzCommandButton.Location = New System.Drawing.Point(176, 206)
         Me.SantaCruzCommandButton.Name = "SantaCruzCommandButton"
         Me.SantaCruzCommandButton.Size = New System.Drawing.Size(25, 25)
         Me.SantaCruzCommandButton.TabIndex = 14
@@ -244,7 +245,7 @@ Partial Class OpenRoomForm
         '
         'ShastaCommandButton
         '
-        Me.ShastaCommandButton.Location = New System.Drawing.Point(361, 143)
+        Me.ShastaCommandButton.Location = New System.Drawing.Point(361, 166)
         Me.ShastaCommandButton.Name = "ShastaCommandButton"
         Me.ShastaCommandButton.Size = New System.Drawing.Size(25, 25)
         Me.ShastaCommandButton.TabIndex = 15
@@ -252,7 +253,7 @@ Partial Class OpenRoomForm
         '
         'SquawValleyCommandButton
         '
-        Me.SquawValleyCommandButton.Location = New System.Drawing.Point(361, 181)
+        Me.SquawValleyCommandButton.Location = New System.Drawing.Point(361, 204)
         Me.SquawValleyCommandButton.Name = "SquawValleyCommandButton"
         Me.SquawValleyCommandButton.Size = New System.Drawing.Size(25, 25)
         Me.SquawValleyCommandButton.TabIndex = 16
@@ -260,7 +261,7 @@ Partial Class OpenRoomForm
         '
         'JoshuaTreeCommandButton
         '
-        Me.JoshuaTreeCommandButton.Location = New System.Drawing.Point(361, 219)
+        Me.JoshuaTreeCommandButton.Location = New System.Drawing.Point(361, 242)
         Me.JoshuaTreeCommandButton.Name = "JoshuaTreeCommandButton"
         Me.JoshuaTreeCommandButton.Size = New System.Drawing.Size(25, 25)
         Me.JoshuaTreeCommandButton.TabIndex = 17
@@ -268,7 +269,7 @@ Partial Class OpenRoomForm
         '
         'MontereyCommandButton
         '
-        Me.MontereyCommandButton.Location = New System.Drawing.Point(361, 257)
+        Me.MontereyCommandButton.Location = New System.Drawing.Point(361, 280)
         Me.MontereyCommandButton.Name = "MontereyCommandButton"
         Me.MontereyCommandButton.Size = New System.Drawing.Size(25, 25)
         Me.MontereyCommandButton.TabIndex = 18
@@ -276,7 +277,7 @@ Partial Class OpenRoomForm
         '
         'PismoBeachCommandButton
         '
-        Me.PismoBeachCommandButton.Location = New System.Drawing.Point(361, 295)
+        Me.PismoBeachCommandButton.Location = New System.Drawing.Point(361, 318)
         Me.PismoBeachCommandButton.Name = "PismoBeachCommandButton"
         Me.PismoBeachCommandButton.Size = New System.Drawing.Size(25, 25)
         Me.PismoBeachCommandButton.TabIndex = 19
@@ -285,7 +286,7 @@ Partial Class OpenRoomForm
         'CarmelTxtBox
         '
         Me.CarmelTxtBox.AutoSize = True
-        Me.CarmelTxtBox.Location = New System.Drawing.Point(43, 150)
+        Me.CarmelTxtBox.Location = New System.Drawing.Point(43, 173)
         Me.CarmelTxtBox.Name = "CarmelTxtBox"
         Me.CarmelTxtBox.Size = New System.Drawing.Size(39, 13)
         Me.CarmelTxtBox.TabIndex = 5
@@ -294,7 +295,7 @@ Partial Class OpenRoomForm
         'MendocinoTxtBox
         '
         Me.MendocinoTxtBox.AutoSize = True
-        Me.MendocinoTxtBox.Location = New System.Drawing.Point(43, 190)
+        Me.MendocinoTxtBox.Location = New System.Drawing.Point(43, 213)
         Me.MendocinoTxtBox.Name = "MendocinoTxtBox"
         Me.MendocinoTxtBox.Size = New System.Drawing.Size(60, 13)
         Me.MendocinoTxtBox.TabIndex = 5
@@ -303,7 +304,7 @@ Partial Class OpenRoomForm
         'NapaTxtBox
         '
         Me.NapaTxtBox.AutoSize = True
-        Me.NapaTxtBox.Location = New System.Drawing.Point(43, 228)
+        Me.NapaTxtBox.Location = New System.Drawing.Point(43, 251)
         Me.NapaTxtBox.Name = "NapaTxtBox"
         Me.NapaTxtBox.Size = New System.Drawing.Size(33, 13)
         Me.NapaTxtBox.TabIndex = 5
@@ -312,7 +313,7 @@ Partial Class OpenRoomForm
         'PinnaclesTxtBox
         '
         Me.PinnaclesTxtBox.AutoSize = True
-        Me.PinnaclesTxtBox.Location = New System.Drawing.Point(43, 266)
+        Me.PinnaclesTxtBox.Location = New System.Drawing.Point(43, 289)
         Me.PinnaclesTxtBox.Name = "PinnaclesTxtBox"
         Me.PinnaclesTxtBox.Size = New System.Drawing.Size(53, 13)
         Me.PinnaclesTxtBox.TabIndex = 5
@@ -321,7 +322,7 @@ Partial Class OpenRoomForm
         'TahoeTxtBox
         '
         Me.TahoeTxtBox.AutoSize = True
-        Me.TahoeTxtBox.Location = New System.Drawing.Point(43, 304)
+        Me.TahoeTxtBox.Location = New System.Drawing.Point(43, 327)
         Me.TahoeTxtBox.Name = "TahoeTxtBox"
         Me.TahoeTxtBox.Size = New System.Drawing.Size(38, 13)
         Me.TahoeTxtBox.TabIndex = 5
@@ -330,7 +331,7 @@ Partial Class OpenRoomForm
         'BigSurTxtBox
         '
         Me.BigSurTxtBox.AutoSize = True
-        Me.BigSurTxtBox.Location = New System.Drawing.Point(207, 151)
+        Me.BigSurTxtBox.Location = New System.Drawing.Point(207, 174)
         Me.BigSurTxtBox.Name = "BigSurTxtBox"
         Me.BigSurTxtBox.Size = New System.Drawing.Size(41, 13)
         Me.BigSurTxtBox.TabIndex = 5
@@ -339,7 +340,7 @@ Partial Class OpenRoomForm
         'SantaCruzTxtBox
         '
         Me.SantaCruzTxtBox.AutoSize = True
-        Me.SantaCruzTxtBox.Location = New System.Drawing.Point(207, 189)
+        Me.SantaCruzTxtBox.Location = New System.Drawing.Point(207, 212)
         Me.SantaCruzTxtBox.Name = "SantaCruzTxtBox"
         Me.SantaCruzTxtBox.Size = New System.Drawing.Size(59, 13)
         Me.SantaCruzTxtBox.TabIndex = 5
@@ -348,7 +349,7 @@ Partial Class OpenRoomForm
         'ShastaTxtBox
         '
         Me.ShastaTxtBox.AutoSize = True
-        Me.ShastaTxtBox.Location = New System.Drawing.Point(392, 149)
+        Me.ShastaTxtBox.Location = New System.Drawing.Point(392, 172)
         Me.ShastaTxtBox.Name = "ShastaTxtBox"
         Me.ShastaTxtBox.Size = New System.Drawing.Size(40, 13)
         Me.ShastaTxtBox.TabIndex = 5
@@ -357,7 +358,7 @@ Partial Class OpenRoomForm
         'SquawValleyTxtBox
         '
         Me.SquawValleyTxtBox.AutoSize = True
-        Me.SquawValleyTxtBox.Location = New System.Drawing.Point(392, 187)
+        Me.SquawValleyTxtBox.Location = New System.Drawing.Point(392, 210)
         Me.SquawValleyTxtBox.Name = "SquawValleyTxtBox"
         Me.SquawValleyTxtBox.Size = New System.Drawing.Size(71, 13)
         Me.SquawValleyTxtBox.TabIndex = 5
@@ -366,7 +367,7 @@ Partial Class OpenRoomForm
         'JoshuaTreeTxtBox
         '
         Me.JoshuaTreeTxtBox.AutoSize = True
-        Me.JoshuaTreeTxtBox.Location = New System.Drawing.Point(392, 227)
+        Me.JoshuaTreeTxtBox.Location = New System.Drawing.Point(392, 250)
         Me.JoshuaTreeTxtBox.Name = "JoshuaTreeTxtBox"
         Me.JoshuaTreeTxtBox.Size = New System.Drawing.Size(66, 13)
         Me.JoshuaTreeTxtBox.TabIndex = 5
@@ -375,7 +376,7 @@ Partial Class OpenRoomForm
         'MontereyTxtBox
         '
         Me.MontereyTxtBox.AutoSize = True
-        Me.MontereyTxtBox.Location = New System.Drawing.Point(392, 263)
+        Me.MontereyTxtBox.Location = New System.Drawing.Point(392, 286)
         Me.MontereyTxtBox.Name = "MontereyTxtBox"
         Me.MontereyTxtBox.Size = New System.Drawing.Size(51, 13)
         Me.MontereyTxtBox.TabIndex = 5
@@ -384,7 +385,7 @@ Partial Class OpenRoomForm
         'PismoBeachTxtBox
         '
         Me.PismoBeachTxtBox.AutoSize = True
-        Me.PismoBeachTxtBox.Location = New System.Drawing.Point(392, 303)
+        Me.PismoBeachTxtBox.Location = New System.Drawing.Point(392, 326)
         Me.PismoBeachTxtBox.Name = "PismoBeachTxtBox"
         Me.PismoBeachTxtBox.Size = New System.Drawing.Size(69, 13)
         Me.PismoBeachTxtBox.TabIndex = 5
@@ -392,7 +393,7 @@ Partial Class OpenRoomForm
         '
         'DRRoomCommandButton
         '
-        Me.DRRoomCommandButton.Location = New System.Drawing.Point(12, 333)
+        Me.DRRoomCommandButton.Location = New System.Drawing.Point(12, 356)
         Me.DRRoomCommandButton.Name = "DRRoomCommandButton"
         Me.DRRoomCommandButton.Size = New System.Drawing.Size(25, 25)
         Me.DRRoomCommandButton.TabIndex = 12
@@ -401,7 +402,7 @@ Partial Class OpenRoomForm
         'DRRoomTxtBox
         '
         Me.DRRoomTxtBox.AutoSize = True
-        Me.DRRoomTxtBox.Location = New System.Drawing.Point(43, 340)
+        Me.DRRoomTxtBox.Location = New System.Drawing.Point(43, 363)
         Me.DRRoomTxtBox.Name = "DRRoomTxtBox"
         Me.DRRoomTxtBox.Size = New System.Drawing.Size(110, 13)
         Me.DRRoomTxtBox.TabIndex = 5
@@ -412,7 +413,7 @@ Partial Class OpenRoomForm
         Me.UsageInfo.AutoSize = True
         Me.UsageInfo.Checked = True
         Me.UsageInfo.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.UsageInfo.Location = New System.Drawing.Point(354, 349)
+        Me.UsageInfo.Location = New System.Drawing.Point(354, 372)
         Me.UsageInfo.Name = "UsageInfo"
         Me.UsageInfo.Size = New System.Drawing.Size(140, 17)
         Me.UsageInfo.TabIndex = 20
@@ -457,16 +458,26 @@ Partial Class OpenRoomForm
         '
         'ProgressBar
         '
-        Me.ProgressBar.Location = New System.Drawing.Point(0, 372)
+        Me.ProgressBar.Location = New System.Drawing.Point(0, 395)
         Me.ProgressBar.Name = "ProgressBar"
         Me.ProgressBar.Size = New System.Drawing.Size(506, 33)
         Me.ProgressBar.TabIndex = 21
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(9, 119)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(223, 13)
+        Me.Label1.TabIndex = 22
+        Me.Label1.Text = "Tip: Click the green buttons to book the room!"
         '
         'OpenRoomForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(506, 401)
+        Me.ClientSize = New System.Drawing.Size(506, 431)
+        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.ProgressBar)
         Me.Controls.Add(Me.UsageInfo)
         Me.Controls.Add(Me.PismoBeachTxtBox)
@@ -560,4 +571,5 @@ Partial Class OpenRoomForm
     Friend WithEvents AboutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents RunOpenRoomToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ProgressBar As System.Windows.Forms.ProgressBar
+    Friend WithEvents Label1 As System.Windows.Forms.Label
 End Class

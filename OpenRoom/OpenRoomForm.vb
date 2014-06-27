@@ -3,7 +3,7 @@ Imports System.ComponentModel
 
 Public Class OpenRoomForm
     Dim OR_Engine As OpenRoom_Engine 'Engine for determining if a room is open and to book a room
-    Public RoomList As New List(Of Room)(13)
+    Public RoomList As New List(Of Room) '(13)
     Dim meetingDateAndTime As Date
     Dim meetingLength As Integer
     Dim bw As BackgroundWorker = New BackgroundWorker
@@ -12,10 +12,12 @@ Public Class OpenRoomForm
         ' This call is required by the Windows Form Designer.
         InitializeComponent()
 
-        bw.WorkerSupportsCancellation = False
-        bw.WorkerReportsProgress = False
+        bw.WorkerSupportsCancellation = True
+        bw.WorkerReportsProgress = True
 
         AddHandler bw.DoWork, AddressOf bw_DoWork
+        AddHandler bw.ProgressChanged, AddressOf bw_ProgressChanged
+        AddHandler bw.RunWorkerCompleted, AddressOf bw_RunWorkerCompleted
 
         'Create a new instance of the OpenRoom Engine
         OR_Engine = New OpenRoom_Engine
@@ -62,7 +64,77 @@ Public Class OpenRoomForm
     Private Sub bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
         Dim arguments As ThreadArguments = e.Argument
 
-        arguments.result = OR_Engine.isRoomBusy(arguments.room, arguments.meetingDateAndTime, arguments.meetingLength)
+        ' For loop that goes through RoomList and checks if each one is available at the time requested
+        ' First it will grab the conference room name from the list, then after getting a status back
+        ' it will update the color of the button so that it reflects the room's schedule
+
+        For Each room As Room In arguments.roomList
+
+            If bw.CancellationPending = True Then
+                e.Cancel = True
+                Exit For
+            End If
+
+            room.Available = -1
+            If room.Enabled = True Then
+                If (OR_Engine.isRoomBusy(room.OutlookName, meetingDateAndTime, meetingLength) = False) Then
+                    room.Available = 1
+                Else
+                    room.Available = 0
+                End If
+            End If
+
+            bw.ReportProgress(10, room)
+
+        Next room
+    End Sub
+
+    Private Sub bw_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
+        Dim room As Room = e.UserState
+        'Dim room As Room
+        ''Dim compareRoom As New Room
+        ''compareRoom.Available = room.Available
+        ''compareRoom.Button = room.Button
+        ''compareRoom.Enabled = room.Enabled
+        ''compareRoom.FormatedName = room.FormatedName
+        ''compareRoom.Location = room.Location
+        ''compareRoom.OutlookName = room.OutlookName
+
+        'Dim index As Integer = RoomList.FindIndex(Function(x) x.FormatedName = inputRoom.FormatedName)
+
+        'room = RoomList(index)
+
+        'For Each room In RoomList
+        If room.Available = -1 Then
+            'Do nothing since the room hasnot been checked
+        ElseIf room.Available = 1 Then
+            If room.Button.InvokeRequired = True Then
+                'MsgBox("True")
+                room.Button.BackColor = Drawing.Color.Green
+                room.ButtonEnabled = True
+                'room.Button.Enabled = True ' think this needs to have an invoke 
+            End If
+        ElseIf room.Available = 0 Then
+            If room.Button.InvokeRequired = True Then
+                'MsgBox("False")
+                room.Button.BackColor = Drawing.Color.Red
+                room.ButtonEnabled = False
+                'room.Button.Enabled = False
+            End If
+        End If
+            'Next
+    End Sub
+
+    Private Sub bw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
+
+        If e.Cancelled = True Then
+            MsgBox("Search Canceled!")
+        ElseIf e.Error IsNot Nothing Then
+            MsgBox("Error!! " & e.Error.Message)
+        Else
+
+        End If
+
 
     End Sub
 
@@ -92,37 +164,22 @@ Public Class OpenRoomForm
                 meetingLength = 120
         End Select
 
-        'Replace the time consuming operation below with bw.RunWorkerAsync()
+        'Dim RoomListCopy As List(Of Room) = New List(Of Room)
 
-        ' For loop that goes through RoomList and checks if each one is available at the time requested
-        ' First it will grab the conference room name from the list, then after getting a status back
-        ' it will update the color of the button so that it reflects the room's schedule
-        For Each room As Room In RoomList
-            If room.Enabled = True Then
-                Dim arguments As ThreadArguments = New ThreadArguments
+        'For Each room In RoomList
+        '    RoomListCopy.Add(room.Clone())
+        'Next
 
-                arguments.room = room.OutlookName
-                arguments.meetingDateAndTime = meetingDateAndTime
-                arguments.meetingLength = meetingLength
+        Dim arguments As ThreadArguments = New ThreadArguments
+        arguments.roomList = RoomList
+        arguments.meetingDateAndTime = meetingDateAndTime
+        arguments.meetingLength = meetingLength
 
-                'If Not bw.IsBusy = True Then
-                '    bw.RunWorkerAsync(arguments)
-                'End If
-
-                'If (arguments.result = False) Then
-                If (OR_Engine.isRoomBusy(room.OutlookName, meetingDateAndTime, meetingLength) = False) Then
-                    room.Button.BackColor = Drawing.Color.Green
-                    room.Button.Enabled = True
-                Else
-                    room.Button.BackColor = Drawing.Color.Red
-                    room.Button.Enabled = False
-                End If
-
-                ProgressBar.Value = ((RoomList.IndexOf(room) + 1) / RoomList.Count) * 100
-                Windows.Forms.Application.DoEvents() 'Eventually want to replace this with BackgroundWorker class and do multithreading
-
-            End If
-        Next room
+        If Not bw.IsBusy = True Then
+            bw.RunWorkerAsync(arguments)
+        Else
+            MsgBox("Cannot perform search while another is already running!")
+        End If
     End Sub
 
     Private Sub FindRoomBtn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles FindRoomBtn.Click
@@ -155,7 +212,7 @@ Public Class OpenRoomForm
 
         'Find the room that is associated with the button pressed and book the room for the time that was active during the search
         For Each room As Room In RoomList
-            If (room.Button.Name = btn.Name) Then
+            If (room.Button.Name = btn.Name And room.ButtonEnabled = True) Then
                 roomClicked = room.OutlookName
                 If (OR_Engine.BookConferenceRoom(roomClicked, meetingDateAndTime, meetingLength)) Then
                     System.Windows.Forms.MessageBox.Show("You successfully booked " & roomClicked)
@@ -186,7 +243,8 @@ Public Class OpenRoomForm
         'Reset all the room button's color & enabled status
         For Each room As Room In RoomList
             room.Button.BackColor = Drawing.SystemColors.Control
-            room.Button.Enabled = False
+            'room.Button.Enabled = False
+            room.ButtonEnabled = False
         Next (room)
 
         'Refresh()
@@ -249,5 +307,10 @@ Public Class OpenRoomForm
             Case Keys.Escape
                 Me.Close()
         End Select
+    End Sub
+
+    Public Overloads Sub Close()
+        'Cancels the backgroundworker when the application closes
+        bw.CancelAsync()
     End Sub
 End Class
