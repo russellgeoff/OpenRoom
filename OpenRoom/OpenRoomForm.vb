@@ -10,7 +10,7 @@ Public Class OpenRoomForm
     Dim quickRoom As Boolean
     Dim appointmentItem As Outlook.AppointmentItem
 
-    Public Sub New(ByVal quickRoom As Boolean)
+    Public Sub New(ByVal quickRoomMode As Boolean)
         ' This call is required by the Windows Form Designer.
         Me.InitializeComponent()
 
@@ -56,9 +56,10 @@ Public Class OpenRoomForm
         Me.ResetRooms()
         Me.Show()
 
-        Me.quickRoom = quickRoom
+        Me.quickRoom = quickRoomMode
 
         If Me.quickRoom Then
+            Me.QuickRoomLbl.Visible = True
             Me.appointmentItem = Globals.ThisAddIn.Application.ActiveInspector().CurrentItem
             'Pulls starting info from appointment
             Me.GetAppointmentInfo()
@@ -74,7 +75,6 @@ Public Class OpenRoomForm
         ' it will update the color of the button so that it reflects the room's schedule
 
         For Each room As Room In arguments.roomList
-
             If bw.CancellationPending = True Then
                 e.Cancel = True
                 Exit For
@@ -89,45 +89,25 @@ Public Class OpenRoomForm
                 End If
             End If
 
-            bw.ReportProgress(10, room)
+            bw.ReportProgress(0, room)
 
         Next room
     End Sub
 
     Private Sub bw_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
         Dim room As Room = e.UserState
-        'Dim room As Room
-        ''Dim compareRoom As New Room
-        ''compareRoom.Available = room.Available
-        ''compareRoom.Button = room.Button
-        ''compareRoom.Enabled = room.Enabled
-        ''compareRoom.FormatedName = room.FormatedName
-        ''compareRoom.Location = room.Location
-        ''compareRoom.OutlookName = room.OutlookName
 
-        'Dim index As Integer = RoomList.FindIndex(Function(x) x.FormatedName = inputRoom.FormatedName)
-
-        'room = RoomList(index)
-
-        'For Each room In RoomList
         If room.Available = -1 Then
-            'Do nothing since the room hasnot been checked
+            'Do nothing since the room has not been checked
         ElseIf room.Available = 1 Then
-            'If room.Button.InvokeRequired = True Then
-            'MsgBox("True")
             room.Button.BackColor = Drawing.Color.Green
             room.ButtonEnabled = True
-            'room.Button.Enabled = True ' think this needs to have an invoke 
-            'End If
+            'room.Button.Enabled = True 'Causes problems with threading
         ElseIf room.Available = 0 Then
-            'If room.Button.InvokeRequired = True Then
-            'MsgBox("False")
             room.Button.BackColor = Drawing.Color.Red
             room.ButtonEnabled = False
-            'room.Button.Enabled = False
-            'End If
+            'room.Button.Enabled = False 'Causes problems with threading
         End If
-            'Next
     End Sub
 
     Private Sub bw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
@@ -139,8 +119,6 @@ Public Class OpenRoomForm
         Else
 
         End If
-
-
     End Sub
 
     Private Sub OpenRoomSearch()
@@ -168,12 +146,6 @@ Public Class OpenRoomForm
             Case "2 hours"
                 Me.meetingLength = 120
         End Select
-
-        'Dim RoomListCopy As List(Of Room) = New List(Of Room)
-
-        'For Each room In RoomList
-        '    RoomListCopy.Add(room.Clone())
-        'Next
 
         Dim arguments As ThreadArguments = New ThreadArguments
         arguments.roomList = Me.RoomList
@@ -220,10 +192,23 @@ Public Class OpenRoomForm
             If (room.Button.Name = btn.Name And room.ButtonEnabled = True) Then
                 roomClicked = room.OutlookName
                 If (OR_Engine.BookConferenceRoom(roomClicked, meetingDateAndTime, meetingLength)) Then
-                    System.Windows.Forms.MessageBox.Show("You successfully booked " & roomClicked)
-
                     If Me.quickRoom Then
+                        'Syncronizes the appointment with the current search
                         Me.appointmentItem.Location = roomClicked
+                        Me.appointmentItem.Start = meetingDateAndTime
+                        Me.appointmentItem.End = meetingDateAndTime.AddMinutes(meetingLength)
+                        System.Windows.Forms.MessageBox.Show("You successfully booked " & roomClicked & "!" & _
+                                                             vbNewLine & vbNewLine & _
+                                                             "The appointment has been updated to:" & _
+                                                             vbNewLine & _
+                                                             "Date & Time: " & meetingDateAndTime & _
+                                                             vbNewLine & _
+                                                             "Meeting Length: " & meetingLength & " minutes" & _
+                                                             vbNewLine & _
+                                                             "Room: " & roomClicked
+                                                             )
+                    Else
+                        System.Windows.Forms.MessageBox.Show("You successfully booked " & roomClicked & "!")
                     End If
 
                     If Me.UsageInfo.Checked Then 'Only sends usage info if user opts in
@@ -299,10 +284,8 @@ Public Class OpenRoomForm
             Case 120
                 Me.MeetingLengthComboBox.SelectedItem = "2 hours"
             Case Else
-                System.Windows.Forms.MessageBox.Show("Selected meeting lenght is non standard or too long to be supported by OpenRoom")
+                System.Windows.Forms.MessageBox.Show("Selected meeting length is non standard or too long to be supported by OpenRoom")
         End Select
-
-        'System.Windows.Forms.MessageBox.Show("Current time: " & startTime & " End time: " & endTime & "Difference: " & meetingLength)
 
         Me.StartDatePicker.Value = startTime
         Me.StartTimePicker.Value = startTime

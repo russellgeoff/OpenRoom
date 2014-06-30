@@ -29,7 +29,7 @@
              size="large" image="OpenRoomIcon.png"/>
           <button id="btnRunQuickRoom" label="QuickRoom"
              screentip="OpenRoom QuickRoom" onAction="OnActionCallback"
-             supertip="Runs OpenRoom to find and book a conference room based on the current meeting information"
+             supertip="Runs OpenRoom and and synchronizes it with your current appointment."
              size="large" image="QuickRoomIcon.png"/>
         </group>
       </tab>
