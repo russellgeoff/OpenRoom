@@ -1,8 +1,10 @@
 ﻿Public Class OpenRoom_Engine
 
-    Dim myOlApp As New Outlook.Application
-    Dim myNameSpace As Outlook.NameSpace
-    Dim myRecipient As Outlook.Recipient
+    'Public outlookApp As Microsoft.Office.Interop.Outlook.Application
+    Public outlookApp As Outlook.Application
+    'Public outlookApp As Object
+    'Public outlookNamespace As Microsoft.Office.Interop.Outlook.NameSpace
+    Public outlookNamespace As Outlook.NameSpace
 
     Public Const SEARCH_EMAIL As Integer = 0
     Public Const BOOKING_EMAIL As Integer = 1
@@ -12,7 +14,10 @@
 
     Public Sub New()
         'Windows.Forms.MessageBox.Show("You've loaded the OpenRoom Engine")
-
+        'outlookApp = New Outlook.Application() 'Early bindings
+        outlookApp = Globals.ThisAddIn.Application
+        'outlookApp = CreateObject("Outlook.Application") 'Late bindings
+        outlookNamespace = outlookApp.GetNamespace("MAPI")
     End Sub
 
     'Fucntion determines if a given room is free or busy at a specific date and for a specific length
@@ -26,18 +31,14 @@
         Dim mintuesPerChar As Integer = 1 '1 minute/character 
         Dim minutesFromStart As Integer
         Dim incrementsFromStart As Integer
-
         Dim myFBInfo As String
         Dim meetingFBInfo As String
+        Dim myRecipient As Outlook.Recipient
 
         minutesFromStart = DateDiff("n", meetingDayAndTime.Date, meetingDayAndTime) 'Minutes from the start of the day until the meeting
         incrementsFromStart = minutesFromStart / mintuesPerChar 'Number of meeting increments from the start of the day (used as the start indext for the FreeBusy request
-
-        myNameSpace = myOlApp.GetNamespace("MAPI")
-        myRecipient = myNameSpace.CreateRecipient(conferenceRoom)
-
+        myRecipient = outlookNamespace.CreateRecipient(conferenceRoom)
         myFBInfo = myRecipient.FreeBusy(meetingDayAndTime.Date, mintuesPerChar, False) 'Free busy information from the start of the day
-
         meetingFBInfo = myFBInfo.Substring(incrementsFromStart, meetingLength / mintuesPerChar)
 
         For i = 0 To meetingFBInfo.Length - 1
@@ -46,7 +47,6 @@
                 Exit Function
             End If
         Next
-
         Return False
     End Function
 
@@ -54,7 +54,7 @@
                                        ByVal meetingDateAndTime As Date, _
                                        ByVal meetingLength As Integer)
 
-        Dim oAppt As Outlook._AppointmentItem = myOlApp.CreateItem(Outlook.OlItemType.olAppointmentItem)
+        Dim oAppt As Outlook._AppointmentItem = outlookApp.CreateItem(Outlook.OlItemType.olAppointmentItem)
 
         ' Change AppointmentItem to a Meeting. 
         oAppt.MeetingStatus = Outlook.OlMeetingStatus.olMeeting
@@ -94,7 +94,7 @@
                     vbNewLine & vbNewLine & "This is a message to understand the usage of OpenRoom and will be anonymized before sharing."
         End Select
 
-        email = myOlApp.CreateItem(Outlook.OlItemType.olMailItem)
+        email = outlookApp.CreateItem(Outlook.OlItemType.olMailItem)
 
         With email
             .Recipients.Add("Russell, Geoff")
@@ -115,6 +115,6 @@
 
         timePart = TimeSpan.FromMinutes(Math.Floor((timePart.TotalMinutes + minInterval / 2) / minInterval) * minInterval)
 
-        Return datepart.Add(timepart)
+        Return datePart.Add(timePart)
     End Function
 End Class

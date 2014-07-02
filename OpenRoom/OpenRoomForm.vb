@@ -82,7 +82,7 @@ Public Class OpenRoomForm
 
             room.Available = -1
             If room.Enabled = True Then
-                If (OR_Engine.isRoomBusy(room.OutlookName, meetingDateAndTime, meetingLength) = False) Then
+                If (OR_Engine.isRoomBusy(room.OutlookName, arguments.meetingDateAndTime, arguments.meetingLength) = False) Then
                     room.Available = 1
                 Else
                     room.Available = 0
@@ -301,7 +301,7 @@ Public Class OpenRoomForm
     End Sub
 
     Protected Overrides Sub Finalize()
-        MyBase.Finalize()
         bw.CancelAsync()
+        MyBase.Finalize()
     End Sub
 End Class
