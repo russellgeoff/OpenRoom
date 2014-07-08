@@ -8,6 +8,8 @@
 
     Public Const SEARCH_EMAIL As Integer = 0
     Public Const BOOKING_EMAIL As Integer = 1
+    Public Const QUICKROOM_SEARCH_EMAIL As Integer = 2
+    Public Const QUICKROOM_BOOKING_EMAIL As Integer = 3
 
     'General Declarations
     Const ORVersion = "2.1" 'OpenRoom Version
@@ -81,15 +83,23 @@
 
         Select Case type
             Case SEARCH_EMAIL 'Sends usage information about the search
-                subject = "[Open Room] A search was just performed with OpenRoom v" & ORVersion
+                subject = "[OpenRoom] A search was just performed with OpenRoom v" & ORVersion
                 body = "A search was performed with OpenRoom v" & ORVersion & "!" &
                     vbNewLine & vbNewLine & "This is a message to understand the usage of OpenRoom and will be anonymized before sharing."
             Case BOOKING_EMAIL 'Sends usage information about the booked room
-                subject = "[Open Room] A room was just booked with OpenRoom v" & ORVersion
+                subject = "[OpenRoom] A room was just booked with OpenRoom v" & ORVersion
                 body = "A room was just booked with OpenRoom v" & ORVersion & "!" &
                     vbNewLine & vbNewLine & "This is a message to understand the usage of OpenRoom and will be anonymized before sharing."
+            Case QUICKROOM_SEARCH_EMAIL
+                subject = "[OpenRoom][QuickRoom] A search was just performed using QuickRoom in OpenRoom v" & ORVersion
+                body = "A search was performed using QuickRoom in OpenRoom v" & ORVersion & "!" &
+                    vbNewLine & vbNewLine & "This is a message to understand the usage of OpenRoom and will be anonymized before sharing."
+            Case QUICKROOM_BOOKING_EMAIL
+                subject = "[OpenRoom][QuickRoom] A room was just booked using QuickRoom in OpenRoom v" & ORVersion
+                body = "A room was just booked using QuickRoom in OpenRoom v" & ORVersion & "!" &
+                    vbNewLine & vbNewLine & "This is a message to understand the usage of OpenRoom and will be anonymized before sharing."
             Case Else 'Sends usage generalized usage information 
-                subject = "[Open Room] An action was performed with OpenRoom v" & ORVersion
+                subject = "[OpenRoom] An action was performed with OpenRoom v" & ORVersion
                 body = "An unidentified action was performed with OpenRoom v" & ORVersion & "!" &
                     vbNewLine & vbNewLine & "This is a message to understand the usage of OpenRoom and will be anonymized before sharing."
         End Select

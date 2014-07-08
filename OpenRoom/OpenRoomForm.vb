@@ -7,6 +7,7 @@ Public Class OpenRoomForm
     Dim meetingDateAndTime As Date
     Dim meetingLength As Integer
     Dim bw As BackgroundWorker = New BackgroundWorker
+    Dim bFormClosing As Boolean = False
     Dim quickRoom As Boolean
     Dim appointmentItem As Outlook.AppointmentItem
 
@@ -70,28 +71,30 @@ Public Class OpenRoomForm
     Private Sub bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)
         Dim arguments As ThreadArguments = e.Argument
 
-        ' For loop that goes through RoomList and checks if each one is available at the time requested
-        ' First it will grab the conference room name from the list, then after getting a status back
-        ' it will update the color of the button so that it reflects the room's schedule
+        If bw.CancellationPending = True Then
+            e.Cancel = True
+        Else
+            ' For loop that goes through RoomList and checks if each one is available at the time requested
+            ' First it will grab the conference room name from the list, then after getting a status back
+            ' it will update the color of the button so that it reflects the room's schedule
 
-        For Each room As Room In arguments.roomList
-            If bw.CancellationPending = True Then
-                e.Cancel = True
-                Exit For
-            End If
-
-            room.Available = -1
-            If room.Enabled = True Then
-                If (OR_Engine.isRoomBusy(room.OutlookName, arguments.meetingDateAndTime, arguments.meetingLength) = False) Then
-                    room.Available = 1
-                Else
-                    room.Available = 0
+            For Each room As Room In arguments.roomList
+                If bw.CancellationPending = True Then
+                    e.Cancel = True
+                    Exit For
                 End If
-            End If
 
-            bw.ReportProgress(0, room)
-
-        Next room
+                room.Available = -1 'Room has not been checked yet
+                If room.Enabled = True Then
+                    If (OR_Engine.isRoomBusy(room.OutlookName, arguments.meetingDateAndTime, arguments.meetingLength) = False) Then
+                        room.Available = 1
+                    Else
+                        room.Available = 0
+                    End If
+                End If
+                bw.ReportProgress(0, room)
+            Next room
+        End If
     End Sub
 
     Private Sub bw_ProgressChanged(ByVal sender As Object, ByVal e As ProgressChangedEventArgs)
@@ -111,9 +114,14 @@ Public Class OpenRoomForm
     End Sub
 
     Private Sub bw_RunWorkerCompleted(ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs)
+        If Not bFormClosing Then
+            If Not e.Cancelled Then
+                'Completion work
+            End If
+        End If
 
         If e.Cancelled = True Then
-            MsgBox("Search Canceled!")
+            'MsgBox("Search Canceled!")
         ElseIf e.Error IsNot Nothing Then
             MsgBox("Error!! " & e.Error.Message)
         Else
@@ -127,7 +135,11 @@ Public Class OpenRoomForm
 
         'Sends usage email
         If Me.UsageInfo.Checked Then 'Only sends usage info if user opts in
-            Me.OR_Engine.SendUsageEmail(OpenRoom_Engine.SEARCH_EMAIL) 'Sends search usage info
+            If Me.quickRoom Then
+                Me.OR_Engine.SendUsageEmail(OpenRoom_Engine.QUICKROOM_SEARCH_EMAIL)
+            Else
+                Me.OR_Engine.SendUsageEmail(OpenRoom_Engine.SEARCH_EMAIL)
+            End If
         End If
 
         'Get user input from form
@@ -212,7 +224,12 @@ Public Class OpenRoomForm
                     End If
 
                     If Me.UsageInfo.Checked Then 'Only sends usage info if user opts in
-                        Me.OR_Engine.SendUsageEmail(OpenRoom_Engine.BOOKING_EMAIL)
+                        If Me.quickRoom Then
+                            Me.OR_Engine.SendUsageEmail(OpenRoom_Engine.QUICKROOM_BOOKING_EMAIL)
+                        Else
+                            Me.OR_Engine.SendUsageEmail(OpenRoom_Engine.BOOKING_EMAIL)
+                        End If
+
                     End If
                 End If
             End If
@@ -300,8 +317,10 @@ Public Class OpenRoomForm
         End Select
     End Sub
 
-    Protected Overrides Sub Finalize()
+    Protected Overrides Sub OnFormClosing(e As FormClosingEventArgs)
+        bFormClosing = True
         bw.CancelAsync()
-        MyBase.Finalize()
+
+        MyBase.OnFormClosing(e)
     End Sub
 End Class
