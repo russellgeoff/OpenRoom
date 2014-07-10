@@ -130,9 +130,6 @@ Public Class OpenRoomForm
     End Sub
 
     Private Sub OpenRoomSearch()
-
-        Me.ResetRooms()
-
         'Sends usage email
         If Me.UsageInfo.Checked Then 'Only sends usage info if user opts in
             If Me.quickRoom Then
@@ -164,7 +161,8 @@ Public Class OpenRoomForm
         arguments.meetingDateAndTime = Me.meetingDateAndTime
         arguments.meetingLength = Me.meetingLength
 
-        If Not bw.IsBusy = True Then
+        If Not bw.IsBusy Then
+            Me.ResetRooms()
             bw.RunWorkerAsync(arguments)
         Else
             MsgBox("Cannot perform search while another is already running!")
@@ -322,5 +320,13 @@ Public Class OpenRoomForm
         bw.CancelAsync()
 
         MyBase.OnFormClosing(e)
+    End Sub
+
+    Private Sub RunOpenRoomToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RunOpenRoomToolStripMenuItem.Click
+        Me.OpenRoomSearch()
+    End Sub
+
+    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
+        Me.Close()
     End Sub
 End Class

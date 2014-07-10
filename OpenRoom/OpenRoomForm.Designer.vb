@@ -65,7 +65,6 @@ Partial Class OpenRoomForm
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RunOpenRoomToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TipLbl = New System.Windows.Forms.Label()
         Me.QuickRoomLbl = New System.Windows.Forms.Label()
         Me.MeetingInformationGrpBox.SuspendLayout()
@@ -422,7 +421,7 @@ Partial Class OpenRoomForm
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.AboutToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Size = New System.Drawing.Size(506, 24)
@@ -449,12 +448,6 @@ Partial Class OpenRoomForm
         Me.ExitToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.E), System.Windows.Forms.Keys)
         Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(182, 22)
         Me.ExitToolStripMenuItem.Text = "&Exit"
-        '
-        'AboutToolStripMenuItem
-        '
-        Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(52, 20)
-        Me.AboutToolStripMenuItem.Text = "About"
         '
         'TipLbl
         '
@@ -573,7 +566,6 @@ Partial Class OpenRoomForm
     Friend WithEvents MenuStrip1 As System.Windows.Forms.MenuStrip
     Friend WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ExitToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents AboutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents RunOpenRoomToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents TipLbl As System.Windows.Forms.Label
     Friend WithEvents QuickRoomLbl As System.Windows.Forms.Label
