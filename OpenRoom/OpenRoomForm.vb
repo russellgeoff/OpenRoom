@@ -66,6 +66,17 @@ Public Class OpenRoomForm
             Me.GetAppointmentInfo()
             Me.OpenRoomSearch()
         End If
+
+
+        Dim keyName As String = "HKEY_CURRENT_USER\Software\MyApp"
+        Dim valueName As String = "Name"
+        Dim readValue As Object = My.Computer.Registry.GetValue(keyName, valueName, Nothing)
+
+        'Determine if this is the first time running and then shows a dialog
+        If Not readValue Then
+            Dim fRunForm As FirstRunTutorial = New FirstRunTutorial()
+            fRunForm.Show()
+        End If
     End Sub
 
     Private Sub bw_DoWork(ByVal sender As Object, ByVal e As DoWorkEventArgs)

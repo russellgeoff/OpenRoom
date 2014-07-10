@@ -247,6 +247,12 @@
   -->
   <ItemGroup>
     <AppDesigner Include="My Project\" />
+    <Compile Include="FirstRunTutorial.Designer.vb">
+      <DependentUpon>FirstRunTutorial.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FirstRunTutorial.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="OpenRoomForm.Designer.vb">
       <DependentUpon>OpenRoomForm.vb</DependentUpon>
     </Compile>
@@ -260,6 +266,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ThreadArguments.vb" />
+    <EmbeddedResource Include="FirstRunTutorial.resx">
+      <DependentUpon>FirstRunTutorial.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OpenRoomForm.resx">
       <DependentUpon>OpenRoomForm.vb</DependentUpon>
     </EmbeddedResource>
@@ -273,15 +282,9 @@
     <Compile Include="My Project\AssemblyInfo.vb" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
@@ -295,6 +298,7 @@
   <ItemGroup>
     <None Include="Resources\QuickRoomIcon.ico" />
     <None Include="Resources\OpenRoomIcon.png" />
+    <None Include="Resources\FirstRun.png" />
     <Content Include="Resources\OpenRoomIcon.ico" />
     <EmbeddedResource Include="OpenRoomRibbon.xml">
       <SubType>Designer</SubType>
