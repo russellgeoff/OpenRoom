@@ -12,7 +12,7 @@
     Public Const QUICKROOM_BOOKING_EMAIL As Integer = 3
 
     'General Declarations
-    Const ORVersion = "2.1" 'OpenRoom Version
+    Const ORVersion = "2.2" 'OpenRoom Version
 
     Public Sub New()
         'Windows.Forms.MessageBox.Show("You've loaded the OpenRoom Engine")
