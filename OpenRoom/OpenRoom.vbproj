@@ -253,6 +253,11 @@
     <Compile Include="FirstRunTutorial.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="OpenRoomForm.Designer.vb">
       <DependentUpon>OpenRoomForm.vb</DependentUpon>
     </Compile>
@@ -281,9 +286,10 @@
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -299,6 +305,7 @@
     <None Include="Resources\QuickRoomIcon.ico" />
     <None Include="Resources\OpenRoomIcon.png" />
     <None Include="Resources\FirstRun.png" />
+    <None Include="Resources\FirstRun.bmp" />
     <Content Include="Resources\OpenRoomIcon.ico" />
     <EmbeddedResource Include="OpenRoomRibbon.xml">
       <SubType>Designer</SubType>

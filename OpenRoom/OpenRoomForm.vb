@@ -68,14 +68,15 @@ Public Class OpenRoomForm
         End If
 
 
-        Dim keyName As String = "HKEY_CURRENT_USER\Software\MyApp"
-        Dim valueName As String = "Name"
-        Dim readValue As Object = My.Computer.Registry.GetValue(keyName, valueName, Nothing)
+        Dim keyName As String = "HKEY_CURRENT_USER\Software\Microsoft\Office\Outlook\Addins\OpenRoom"
+        Dim valueName As String = "FirstRun"
+        Dim readValue = My.Computer.Registry.GetValue(keyName, valueName, Nothing)
 
         'Determine if this is the first time running and then shows a dialog
-        If Not readValue Then
+        If Not readValue = "Yes" Then
             Dim fRunForm As FirstRunTutorial = New FirstRunTutorial()
             fRunForm.Show()
+            My.Computer.Registry.SetValue(keyName, valueName, "Yes")
         End If
     End Sub
 

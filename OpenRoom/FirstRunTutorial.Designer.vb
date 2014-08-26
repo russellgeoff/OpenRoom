@@ -32,6 +32,7 @@ Partial Class FirstRunTutorial
         '
         'PictureBox1
         '
+        Me.PictureBox1.Image = Global.OpenRoom.My.Resources.Resources.FirstRun
         Me.PictureBox1.Location = New System.Drawing.Point(12, 12)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(593, 372)
