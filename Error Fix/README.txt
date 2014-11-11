@@ -1,0 +1,1 @@
+This file is used to remove an erronous key that is put in place when a partial Office 2013 install is performed.
